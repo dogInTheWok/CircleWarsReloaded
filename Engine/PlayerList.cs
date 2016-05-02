@@ -2,6 +2,7 @@ using System.Linq;
 /**
  * Created by MW on 03.10.2014.
  */
+namespace Engine {
 public class PlayerList {
     private int currentNumberOfPlayers;
     private int maxPlayer;
@@ -63,3 +64,4 @@ public class PlayerList {
 		}
 	}
 }
+} //Namespace Engine

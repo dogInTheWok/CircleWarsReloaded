@@ -1,6 +1,9 @@
 /* /**
  * Created by MW on 03.10.2014.
  */
+
+namespace Engine {
+
 class FieldList {
 	Field[] fields;
 
@@ -24,3 +27,5 @@ class FieldList {
 		return fields[id];
 	}
 }
+
+} //Namespace Engine

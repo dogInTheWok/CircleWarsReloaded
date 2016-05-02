@@ -1,6 +1,8 @@
 /**
  * Created by MW on 03.10.2014.
  */
+namespace Engine {
+
 public class Game {
 	static public int NUM_FIELDS = 12;
     static public int NUM_PLAYER = 2;
@@ -63,3 +65,5 @@ public class Game {
 		NextTurn();
 	}
 }
+
+} //Namespace Engine
