@@ -1,3 +1,5 @@
 Unity/CircleWarsReloaded/Library/*
 Unity/CircleWarsReloaded/obj/*
 obj/*
+Engine/bin/*
+Engine/obj/*
