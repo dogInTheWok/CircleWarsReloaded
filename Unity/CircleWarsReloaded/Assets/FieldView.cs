@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Engine;
 
+public class FieldView : MonoBehaviour {
 
-public class Field : MonoBehaviour {
+    private Field field;
 
     public int fieldID = -1;
     
