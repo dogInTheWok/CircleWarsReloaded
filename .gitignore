@@ -3,3 +3,5 @@ Unity/CircleWarsReloaded/obj/*
 obj/*
 Engine/bin/*
 Engine/obj/*
+*.meta
+*.suo
