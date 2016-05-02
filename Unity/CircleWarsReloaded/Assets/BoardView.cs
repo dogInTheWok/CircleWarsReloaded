@@ -3,14 +3,15 @@ using System.Collections;
 
 public class BoardView : MonoBehaviour {
 
+    [SerializeField]
     private GameObject redToken;
+    [SerializeField]
     private GameObject blueToken;
     private GameObject addedToken;
 
     // Use this for initialization
     void Start () {
-        redToken = GameObject.Find("RedToken");
-        redToken = GameObject.Find("BlueToken");
+
     }
 	
 	// Update is called once per frame
