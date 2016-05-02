@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FDA69BB2-C28E-4DE6-9F9B-F5EE233ECE22}"
+	ProjectSection(SolutionItems) = preProject
+		Engine\Field.java = Engine\Field.java
+		Engine\FieldList.java = Engine\FieldList.java
+		Engine\Game.java = Engine\Game.java
+		Engine\GlobalFactory.java = Engine\GlobalFactory.java
+		Engine\Main.java = Engine\Main.java
+		Engine\Player.java = Engine\Player.java
+		Engine\PlayerList.java = Engine\PlayerList.java
+		Engine\unitTests\TestGame.java = Engine\unitTests\TestGame.java
+		Engine\unitTests\TestPlayerList.java = Engine\unitTests\TestPlayerList.java
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
