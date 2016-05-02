@@ -1,5 +1,3 @@
-package com.circleSoftwares;
-
 /**
  * Created by MW on 04.10.2014.
  */

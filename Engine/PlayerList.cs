@@ -1,62 +1,65 @@
-package com.circleSoftwares;
-
-import java.util.ArrayList;
-
+using System.Linq;
 /**
  * Created by MW on 03.10.2014.
  */
 public class PlayerList {
+    private int currentNumberOfPlayers;
     private int maxPlayer;
-    private ArrayList<Player> players;
+    private Player[] players;
 	private Player activePlayer;
 
     public PlayerList(int numPlayer) {
+        currentNumberOfPlayers = 0;
         this.maxPlayer = numPlayer;
-        players = new ArrayList<Player>(numPlayer);
+        players = new Player[numPlayer];
     }
 
-    public void add(Player player) {
-        if( players.contains(player) || players.size() >= maxPlayer )
+    public void Add(Player player) {
+        if( players.Contains(player) || players.Length >= maxPlayer )
             return;
 
-	    players.add(player);
+	    players[currentNumberOfPlayers] = player;
+        currentNumberOfPlayers++;
     }
 
-    public int size() {
-        return players.size();
+    public int Size() {
+        return players.Length;
     }
 
-	public Player.ID activePlayer() throws Exception{
-		if( players.size() < 1 )
-			throw new Exception();
+	public Player.ID ActivePlayer() {
+		if( players.Length < 1 ) {
+            return Player.ID.ILLEGAL;
+        }
 
-		return activePlayer.getId();
+		return activePlayer.id;
 	}
 
-	public void start() {
-		for (Player p : players) {
-			p.setActive(false);
+	public void Start() {
+		foreach (Player p in players) {
+            p.isActive = false;
 		}
-		activePlayer = players.get(0);
-		activePlayer.setActive(true);
-	}
+		activePlayer = players[0];
+        activePlayer.isActive = true;
+    }
 
-	public void nextPlayer() throws Exception{
+	public void NextPlayer() {
 		negateActivityOfAllPlayers();
 		activePlayer = findActivePlayer();
 	}
 
-	private Player findActivePlayer() throws Exception{
-		for(Player p : players){
-			if( p.isActive() )
-				return p;
+	private Player findActivePlayer() {
+		foreach(Player p in players){
+			if( p.isActive ) {
+                return p;
+            }
 		}
-		throw new Exception();
+
+        return null;
 	}
 
 	private void negateActivityOfAllPlayers() {
-		for( Player p : players){
-			p.setActive(!p.isActive());
+		foreach( Player p in players){
+			p.isActive = !p.isActive;
 		}
 	}
 }

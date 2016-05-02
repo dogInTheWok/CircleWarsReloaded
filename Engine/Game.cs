@@ -1,5 +1,3 @@
-package com.circleSoftwares;
-
 /**
  * Created by MW on 03.10.2014.
  */
@@ -23,7 +21,7 @@ public class Game {
 
     public void Start() {
 	    init();
-	    playerList.start();
+	    playerList.Start();
 	    isStarted = true;
     }
 
@@ -35,16 +33,16 @@ public class Game {
 	private void fillPlayerList() {
 		Player player1 = new Player(Player.ID.PLAYER1);
 		Player player2 = new Player(Player.ID.PLAYER2);
-		playerList.add(player1);
-		playerList.add(player2);
+		playerList.Add(player1);
+		playerList.Add(player2);
 	}
 
 	public void AddPlayer(Player player){
-        playerList.add(player);
+        playerList.Add(player);
     }
 
     public int NumPlayer() {
-        return playerList.size();
+        return playerList.Size();
     }
 
 	public int NumFields() {
@@ -56,7 +54,7 @@ public class Game {
 	}
 
 	public void NextTurn() {
-		playerList.nextPlayer();
+		playerList.NextPlayer();
 		distribTurn = distribTurn++;
 	}
 

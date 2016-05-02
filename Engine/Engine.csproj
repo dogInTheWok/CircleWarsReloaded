@@ -41,7 +41,6 @@
     <Compile Include="FieldList.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GlobalFactory.cs" />
-    <Compile Include="Main.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="PlayerList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
