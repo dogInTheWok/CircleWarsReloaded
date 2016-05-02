@@ -14,11 +14,15 @@ public class FieldView : MonoBehaviour {
 
     public void OnMouseDown()
     {
-        addToken();
+        if (!field.addToken())
+            return;
+
+        addVisualToken();
     }
 
-    public void addToken()
+    public void addVisualToken()
     {
+
         if (field.Owner == Player.ID.PLAYER1)
         {
             boardView.addPlayer0Token();
@@ -26,5 +30,6 @@ public class FieldView : MonoBehaviour {
         {
             boardView.addPlayer1Token();
         }
+
     }
 }

@@ -1,6 +1,8 @@
 /**
 * Created by MW on 03.10.2014.
 */
+using UnityEngine;
+using System.Collections;
 
 namespace Engine
 {
@@ -27,9 +29,11 @@ namespace Engine
             neighbours = new Field[Game.NUM_FIELDS];
         }
 
-        public void addToken()
+        public bool addToken()
         {
             TokenCount = TokenCount + 1;
+            return true;
+            // TODO
         }
 
         private void evalField()
