@@ -9,8 +9,7 @@ public class Game {
 	static public int NUM_FORCES_DISTRIB_PHASE = 10;
 	static public int NUM_TURNS_DISTRIB = NUM_PLAYER * NUM_FORCES_DISTRIB_PHASE;
 
-    private boolean isStarted;
-
+    public bool isStarted { get; private set; }
 	private int distribTurn;
 
     private PlayerList playerList;
@@ -21,11 +20,8 @@ public class Game {
 	    fieldList = factory.createFieldList();
         isStarted = false;
     }
-    public boolean isStarted(){
-        return isStarted;
-    }
 
-    public void start() {
+    public void Start() {
 	    init();
 	    playerList.start();
 	    isStarted = true;
@@ -43,29 +39,29 @@ public class Game {
 		playerList.add(player2);
 	}
 
-	public void addPlayer(Player player){
+	public void AddPlayer(Player player){
         playerList.add(player);
     }
 
-    public int numPlayer() {
+    public int NumPlayer() {
         return playerList.size();
     }
 
-	public int numFields() {
+	public int NumFields() {
 		return fieldList.size();
 	}
 
-	public Player.ID activePlayer() throws Exception{
+	public Player.ID ActivePlayer() {
 		return playerList.activePlayer();
 	}
 
-	public void nextTurn() throws Exception{
+	public void NextTurn() {
 		playerList.nextPlayer();
 		distribTurn = distribTurn++;
 	}
 
-	public void dispatchForce(Field field) throws Exception {
+	public void DispatchForce(Field field) {
 		field.addToken();
-		nextTurn();
+		NextTurn();
 	}
 }
