@@ -1,9 +1,12 @@
 /**
  * Created by MW on 03.10.2014.
  */
+using UnityEngine;
+using System.Collections;
+
 namespace Engine {
 
-public class Game {
+public class Game : MonoBehaviour {
 	static public int NUM_FIELDS = 12;
     static public int NUM_PLAYER = 2;
 	static public int NUM_FORCES_DISTRIB_PHASE = 10;

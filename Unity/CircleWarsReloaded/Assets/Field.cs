@@ -19,7 +19,7 @@ namespace Engine
 
         public Field()
         {
-            Owner = Player.ID.PLAYER1;
+            Owner = Player.ID.ILLEGAL;
             FieldId = -1;
             TokenCount = 0;
             IsActive = true;
