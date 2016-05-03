@@ -56,7 +56,7 @@ namespace Engine
 
             int evalTokenCount = TokenCount;
 
-            for (int i = 0; i < neighbours.Length; i++)
+            for (int i = 0; i < neighbours.Count; i++)
             {
                 if (neighbours[i].Owner == Owner)
                 {
