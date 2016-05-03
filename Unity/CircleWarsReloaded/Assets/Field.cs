@@ -3,6 +3,7 @@
 */
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace Engine
 {
@@ -16,7 +17,7 @@ namespace Engine
         public int FieldId { get; private set; }
         public int TokenCount { get; private set; }
 
-        private Field[] neighbours;
+        private List<Field> neighbours;
         private Game game;
 
         public Field()
@@ -26,15 +27,15 @@ namespace Engine
             TokenCount = 0;
             IsActive = true;
             IsWon = false;
-            neighbours = new Field[Game.NUM_FIELDS];
+            neighbours = new List<Field>();
             game = Game.Instance();
         }
 
-        public void addNeighbour( Field neigbhour )
+        public void addNeighbour( Field neighbour )
         {
-            //TODO
-            //neighbours
+            neighbours.Add(neighbour);
         }
+
         public bool addToken()
         {
             if (Owner == Player.ID.ILLEGAL)
