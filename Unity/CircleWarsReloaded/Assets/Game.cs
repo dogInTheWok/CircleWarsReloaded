@@ -6,11 +6,22 @@ using System.Collections;
 
 namespace Engine {
 
-public class Game : MonoBehaviour {
+public class Game {
 	static public int NUM_FIELDS = 12;
     static public int NUM_PLAYER = 2;
 	static public int NUM_FORCES_DISTRIB_PHASE = 10;
 	static public int NUM_TURNS_DISTRIB = NUM_PLAYER * NUM_FORCES_DISTRIB_PHASE;
+
+    static public Game Instance() {
+            if( null == s_instance )
+            {
+                s_instance = new Game( new GlobalFactory() );
+            }
+
+            return s_instance;
+    }
+
+    static private Game s_instance;
 
     public bool isStarted { get; private set; }
 	private int distribTurn;
