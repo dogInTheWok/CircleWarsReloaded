@@ -7,9 +7,9 @@ public class StatusTextView: MonoBehaviour {
 
     class StateListener : GameState.Listener
     {
-        public StateListener( ref Text parent)
+        public StateListener( Text parent)
         {
-
+            text = parent;
         }
         public override void OnStateChange(GameState.State state )
         {
