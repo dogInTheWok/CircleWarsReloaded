@@ -14,7 +14,7 @@ public class FieldView : MonoBehaviour {
         {
             if( GameState.State.Eval == state )
             {
-                //TODO
+                parent.AddNeighbours();
                 parent.AddThreeVisualTokens();
             }
         }
@@ -32,10 +32,6 @@ public class FieldView : MonoBehaviour {
         Field = Game.Instance().createField();
         stateListener = new StateListener( this );
         Game.Instance().CurrentState.RegisterOnStateChange(stateListener);
-        foreach( FieldView view in neighbours)
-        {
-            Field.addNeighbour(view.Field);
-        }
     }
 
     public void OnMouseDown()
@@ -62,5 +58,12 @@ public class FieldView : MonoBehaviour {
     public void AddThreeVisualTokens()
     {
         Debug.Log("Test Add three tokens");
+    }
+    public void AddNeighbours()
+    {
+        foreach (FieldView view in neighbours)
+        {
+            Field.addNeighbour(view.Field);
+        }
     }
 }
