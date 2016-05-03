@@ -25,7 +25,7 @@ namespace Engine
         static public int NUM_FIELDS = 12;
         static public int NUM_PLAYER = 2;
         static public int NUM_SECRETS = 3;
-        static public int NUM_FORCES_DISTRIB_PHASE = 10;
+        static public int NUM_FORCES_DISTRIB_PHASE = 2;
         static public int NUM_TURNS_DISTRIB = NUM_PLAYER * NUM_FORCES_DISTRIB_PHASE;
         static public int NUM_TURNS_SECRET = NUM_PLAYER * NUM_SECRETS;
 
@@ -112,7 +112,7 @@ namespace Engine
             {
                 EnterEval();
             }
-
+            Debug.Log(secretTurn);
             playerList.NextPlayer();
 
             if (CurrentState.Value == GameState.State.RunningDistribution)
@@ -174,9 +174,9 @@ namespace Engine
                 winner = fieldList.Score(Player.ID.PLAYER1) > fieldList.Score(Player.ID.PLAYER2) ? Player.ID.PLAYER1 : Player.ID.PLAYER2;
             }
 
-            CurrentState.Value = GameState.State.Eval;
             Debug.Log("Winner");
             Debug.Log(winner);
+            CurrentState.Value = GameState.State.Eval;
         }
     }
 

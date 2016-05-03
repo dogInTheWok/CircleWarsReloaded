@@ -110,15 +110,15 @@ namespace Engine
 
             int evalTokenCount = TokenCount;
 
-            for (int i = 0; i < neighbours.Count; i++)
+            foreach (Field f in neighbours)
             {
-                if (neighbours[i].Owner == Owner)
+                if (f.Owner == Owner)
                 {
-                    evalTokenCount = evalTokenCount + neighbours[i].TokenCount;
+                    evalTokenCount = evalTokenCount + f.TokenCount;
                 }
                 else
                 {
-                    evalTokenCount = evalTokenCount - neighbours[i].TokenCount;
+                    evalTokenCount = evalTokenCount - f.TokenCount;
                 }
             }
             IsWon = evalTokenCount > 0;
