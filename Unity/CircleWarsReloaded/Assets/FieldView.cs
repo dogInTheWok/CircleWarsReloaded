@@ -9,7 +9,7 @@ public class FieldView : MonoBehaviour {
 
     public void Start()
     {
-        field = new Field();
+        field = Game.Instance().createField();
     }
 
     public void OnMouseDown()
