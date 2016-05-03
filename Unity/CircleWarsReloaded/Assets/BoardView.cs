@@ -7,6 +7,8 @@ public class BoardView : MonoBehaviour {
     private GameObject redToken;
     [SerializeField]
     private GameObject blueToken;
+    [SerializeField]
+    private GameObject blackToken;
     private GameObject addedToken;
 
     // Use this for initialization
@@ -19,17 +21,21 @@ public class BoardView : MonoBehaviour {
 	
 	}
 
-    public void addPlayer0Token()
+    public void addPlayer0Token( Vector2 pos )
     {
-        Vector3 p = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         addedToken = Instantiate(blueToken);
-        addedToken.transform.position = new Vector2(p.x, p.y);
+        addedToken.transform.position = pos;
     }
 
-    public void addPlayer1Token()
+    public void addPlayer1Token( Vector2 pos )
     {
-        Vector3 p = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         addedToken = Instantiate(redToken);
-        addedToken.transform.position = new Vector2(p.x, p.y);
+        addedToken.transform.position = pos;
+    }
+
+    public void addInactiveToken( Vector2 pos )
+    {
+        addedToken = Instantiate(blackToken);
+        addedToken.transform.position = pos;
     }
 }

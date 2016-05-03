@@ -17,19 +17,11 @@ namespace Engine
         public bool IsWon { get; private set; }
         public int TokenCount { get; private set; }
 
+        public bool HasBatillion { get; private set; }
+        public bool HasMarine { get; private set; }
+        public bool HasNapalm { get; private set; }
         private List<Field> neighbours;
         private Game game;
-
-        public Field()
-        {
-            Owner = Player.ID.ILLEGAL;
-            FieldId = -1;
-            TokenCount = 0;
-            IsActive = true;
-            IsWon = false;
-            neighbours = new List<Field>();
-            game = Game.Instance();
-        }
 
         public Field(int id)
         {
@@ -40,6 +32,9 @@ namespace Engine
             IsWon = false;
             neighbours = new List<Field>();
             game = Game.Instance();
+            HasBatillion = false;
+            HasMarine = false;
+            HasNapalm = false;
         }
 
         public void addNeighbour( Field neighbour )
@@ -76,6 +71,7 @@ namespace Engine
                     }
 
                     addToken();
+                    HasMarine = true;
                     break;
 
                 case Game.Secret.batallion:
@@ -88,16 +84,17 @@ namespace Engine
                     addToken();
                     addToken();
                     addToken();
+                    HasBatillion = true;
                     break;
 
                 case Game.Secret.napalm:
-
                     if (Owner == game.ActivePlayer())
                     {
                         return false;
                     }
 
                     IsActive = false;
+                    HasNapalm = true;
                     break;
             }
 
@@ -112,11 +109,11 @@ namespace Engine
 
             foreach (Field f in neighbours)
             {
-                if (f.Owner == Owner)
+                if (f.Owner == Owner && f.IsActive)
                 {
                     evalTokenCount = evalTokenCount + f.TokenCount;
                 }
-                else if (f.Owner != Player.ID.ILLEGAL)
+                else if (f.Owner != Player.ID.ILLEGAL && f.IsActive)
                 {
                     evalTokenCount = evalTokenCount - f.TokenCount;
                 }
