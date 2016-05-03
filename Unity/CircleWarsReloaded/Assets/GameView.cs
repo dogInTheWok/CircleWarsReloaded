@@ -7,7 +7,7 @@ public class GameView : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+        Game = Game.Instance();
 	}
 	
 	// Update is called once per frame

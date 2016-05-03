@@ -11,7 +11,7 @@ public class StatusTextView : MonoBehaviour {
 	void Start () {
         var game = gameView.Game;
         var text = GetComponent<Text>();
-        text.text = "Started";
+        text.text = game.CurrentState.ToString();
 	}
 	
 	// Update is called once per frame

@@ -25,7 +25,8 @@ namespace Engine
         public enum State
         {
             NotStarted,
-            Running,
+            RunningDrawingPhase,
+            RunningSecretPhase,
             Aborted,
             Won
         }
@@ -52,6 +53,7 @@ namespace Engine
             playerList = factory.createPlayerList();
             fieldList = factory.createFieldList();
             isStarted = false;
+            CurrentState = Game.State.NotStarted;
         }
 
         public void StartGame()
@@ -59,6 +61,7 @@ namespace Engine
             init();
             playerList.StartGame();
             isStarted = true;
+            CurrentState = Game.State.RunningDrawingPhase;
         }
 
         private void init()
