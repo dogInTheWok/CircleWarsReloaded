@@ -6,6 +6,7 @@ public class FieldView : MonoBehaviour {
 
     [SerializeField] private BoardView boardView;
     [SerializeField] private FieldView[] neighbours;
+
     public Field Field { get; private set; }
 
     public void Start()
@@ -14,13 +15,13 @@ public class FieldView : MonoBehaviour {
 
         foreach( FieldView view in neighbours)
         {
-            //Field.addNeighbour(view.Field);
+            Field.addNeighbour(view.Field);
         }
     }
 
     public void OnMouseDown()
     {
-        if (!Field.addToken())
+        if (!Game.Instance().DispatchForce(Field))
             return;
 
         addVisualToken();
