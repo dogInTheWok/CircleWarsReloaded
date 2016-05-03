@@ -21,7 +21,7 @@ public class FieldView : MonoBehaviour {
 
     public void OnMouseDown()
     {
-        if (!Game.Instance().DispatchForce(Field))
+        if (!Field.requestToken())
             return;
 
         addVisualToken();
