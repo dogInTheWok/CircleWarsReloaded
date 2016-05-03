@@ -7,6 +7,7 @@ public class StatusTextView : MonoBehaviour {
 
     [SerializeField] private GameView gameView;
     private Text text;
+
     // Use this for initialization
 	void Start () {
         text = GetComponent<Text>();
