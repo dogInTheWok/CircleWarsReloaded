@@ -44,6 +44,7 @@ namespace Engine
             playerList = factory.createPlayerList();
             fieldList = factory.createFieldList();
             isStarted = false;
+            CurrentState = new GameState();
             CurrentState.Value = GameState.State.NotStarted;
         }
 
