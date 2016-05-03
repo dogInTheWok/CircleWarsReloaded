@@ -28,6 +28,10 @@ public class Game {
 
     private PlayerList playerList;
 	private FieldList fieldList;
+    
+    public Field createField() {
+            return fieldList.createField();
+    }
 
     public Game(GlobalFactory factory){
         playerList = factory.createPlayerList();
