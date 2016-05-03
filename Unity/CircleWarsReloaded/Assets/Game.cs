@@ -24,16 +24,26 @@ namespace Engine
     {
         static public int NUM_FIELDS = 12;
         static public int NUM_PLAYER = 2;
+        static public int NUM_SECRETS = 3;
         static public int NUM_FORCES_DISTRIB_PHASE = 10;
         static public int NUM_TURNS_DISTRIB = NUM_PLAYER * NUM_FORCES_DISTRIB_PHASE;
+        static public int NUM_TURNS_SECRET = NUM_PLAYER * NUM_SECRETS;
 
         public GameState CurrentState { get; private set;}
         public bool isStarted { get; private set; }
         private int distribTurn;
-        private Field.Secret secret;
+        private int secretTurn;
+        private Secret secret;
 
         private PlayerList playerList;
         private FieldList fieldList;
+
+        public enum Secret
+        {
+            marine,
+            batallion,
+            napalm
+        }
 
         public Field createField()
         {
@@ -61,6 +71,7 @@ namespace Engine
         {
             fillPlayerList();
             distribTurn = 0;
+            secretTurn = 0;
         }
 
         private void fillPlayerList()
@@ -94,6 +105,11 @@ namespace Engine
             if (distribTurn == NUM_TURNS_DISTRIB)
             {
                 EnterSecretPhase();
+            }
+
+            if (secretTurn == NUM_TURNS_SECRET)
+            {
+                EnterEval();
             }
 
             playerList.NextPlayer();
@@ -136,12 +152,18 @@ namespace Engine
 
         public void NextSecret()
         {
-            secret += 1;
+            secretTurn += 1;
+            secret = (Secret)(secretTurn % 2);
         }
 
         public void NextDistrib()
         {
             distribTurn += 1;
+        }
+
+        public void EnterEval()
+        {
+            CurrentState.Value = GameState.State.Eval;
         }
     }
 

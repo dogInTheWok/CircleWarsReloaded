@@ -17,13 +17,6 @@ namespace Engine
         public bool IsWon { get; private set; }
         public int TokenCount { get; private set; }
 
-        public enum Secret
-        {
-            marine,
-            batallion,
-            napalm
-        }
-
         private List<Field> neighbours;
         private Game game;
 
@@ -73,10 +66,23 @@ namespace Engine
             return Game.Instance().DispatchForce(this);
         }
 
-        public bool addSecret(Secret secret)
+        public bool addSecret(Game.Secret secret)
         {
+            switch (secret) {
+                case Game.Secret.marine:
+                    addToken();
+                    break;
+                case Game.Secret.batallion:
+                    addToken();
+                    addToken();
+                    addToken();
+                    break;
+                case Game.Secret.napalm:
+                    IsActive = false;
+                    break;
+            }
+
             return true;
-            // TODO
         }
 
         private void evalField()
