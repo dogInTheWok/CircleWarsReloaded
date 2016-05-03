@@ -17,7 +17,7 @@ namespace Engine
         public int TokenCount { get; private set; }
 
         private Field[] neighbours;
-
+        private Game game;
 
         public Field()
         {
@@ -27,13 +27,21 @@ namespace Engine
             IsActive = true;
             IsWon = false;
             neighbours = new Field[Game.NUM_FIELDS];
+            game = Game.Instance();
         }
 
         public bool addToken()
         {
+            if (Owner == Player.ID.ILLEGAL)
+            {
+                Owner = game.ActivePlayer();
+            } else if (Owner != game.ActivePlayer())
+            {
+                return false;
+            }
+
             TokenCount = TokenCount + 1;
             return true;
-            // TODO
         }
 
         private void evalField()
