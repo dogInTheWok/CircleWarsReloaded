@@ -9,7 +9,7 @@ namespace Engine {
 public class Game {
 	static public int NUM_FIELDS = 12;
     static public int NUM_PLAYER = 2;
-	static public int NUM_FORCES_DISTRIB_PHASE = 10;
+	static public int NUM_FORCES_DISTRIB_PHASE = 14;
 	static public int NUM_TURNS_DISTRIB = NUM_PLAYER * NUM_FORCES_DISTRIB_PHASE;
 
     static public Game Instance() {
@@ -73,14 +73,29 @@ public class Game {
 	}
 
 	public void NextTurn() {
+            if (distribTurn == NUM_TURNS_DISTRIB)
+            {
+                EnterSecretPhase();
+                return;
+            }
 		playerList.NextPlayer();
 		distribTurn = distribTurn++;
 	}
 
-	public void DispatchForce(Field field) {
-		field.addToken();
-		NextTurn();
+	public bool DispatchForce(Field field) {
+            if (field.addToken())
+            {
+                NextTurn();
+                return true;
+            }
+            return false;
 	}
+
+    public void EnterSecretPhase()
+        {
+            // TODO: state machine phases
+            return;
+        }
 }
 
 } //Namespace Engine

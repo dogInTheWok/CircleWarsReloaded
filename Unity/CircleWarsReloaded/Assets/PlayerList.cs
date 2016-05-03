@@ -1,4 +1,6 @@
 using System.Linq;
+using UnityEngine;
+
 /**
  * Created by MW on 03.10.2014.
  */
@@ -28,7 +30,7 @@ public class PlayerList {
     }
 
 	public Player.ID ActivePlayer() {
-		if( players.Length < 1 ) {
+		if( currentNumberOfPlayers < 1 ) {
             return Player.ID.ILLEGAL;
         }
 
@@ -46,6 +48,7 @@ public class PlayerList {
 	public void NextPlayer() {
 		negateActivityOfAllPlayers();
 		activePlayer = findActivePlayer();
+            Debug.Log(activePlayer.id);
 	}
 
 	private Player findActivePlayer() {
