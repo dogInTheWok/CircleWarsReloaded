@@ -70,14 +70,33 @@ namespace Engine
         {
             switch (secret) {
                 case Game.Secret.marine:
+                    if (Owner != game.ActivePlayer())
+                    {
+                        return false;
+                    }
+
                     addToken();
                     break;
+
                 case Game.Secret.batallion:
+
+                    if (Owner != game.ActivePlayer())
+                    {
+                        return false;
+                    }
+
                     addToken();
                     addToken();
                     addToken();
                     break;
+
                 case Game.Secret.napalm:
+
+                    if (Owner == game.ActivePlayer())
+                    {
+                        return false;
+                    }
+
                     IsActive = false;
                     break;
             }
@@ -85,7 +104,7 @@ namespace Engine
             return true;
         }
 
-        private void evalField()
+        public void evalField()
         {
             /* determine if field has isWon combat for its owner */
 

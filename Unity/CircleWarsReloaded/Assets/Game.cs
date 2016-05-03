@@ -34,6 +34,7 @@ namespace Engine
         private int distribTurn;
         private int secretTurn;
         private Secret secret;
+        private Player.ID winner;
 
         private PlayerList playerList;
         private FieldList fieldList;
@@ -163,7 +164,19 @@ namespace Engine
 
         public void EnterEval()
         {
+            fieldList.Eval();
+            if (fieldList.Score(Player.ID.PLAYER1) == fieldList.Score(Player.ID.PLAYER2))
+            {
+                winner = Player.ID.ILLEGAL;
+            }
+            else
+            {
+                winner = fieldList.Score(Player.ID.PLAYER1) > fieldList.Score(Player.ID.PLAYER2) ? Player.ID.PLAYER1 : Player.ID.PLAYER2;
+            }
+
             CurrentState.Value = GameState.State.Eval;
+            Debug.Log("Winner");
+            Debug.Log(winner);
         }
     }
 

@@ -32,6 +32,27 @@ public class FieldList {
 	public Field get(int id) {
 		return fields[id];
 	}
+
+    public void Eval()
+        {
+            foreach (Field f in fields)
+            {
+                f.evalField();
+            }
+        }
+
+        public int Score(Player.ID playerId)
+        {
+            int score = 0;
+
+            foreach (Field f in fields)
+            {
+                if (f.IsActive && f.IsWon)
+                    score++;
+            }
+
+            return score;
+        }
 }
 
 } //Namespace Engine
