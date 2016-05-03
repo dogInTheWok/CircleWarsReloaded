@@ -14,4 +14,9 @@ public class GameView : MonoBehaviour {
 	void Update () {
 	
 	}
+
+    public void onClickStartButton()
+    {
+        Debug.Log("Game has started.");
+    }
 }
