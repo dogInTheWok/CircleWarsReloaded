@@ -47,7 +47,7 @@ public class FieldList {
 
             foreach (Field f in fields)
             {
-                if (f.IsActive && f.IsWon)
+                if (f.IsActive && f.IsWon && f.Owner == playerId)
                     score++;
             }
 

@@ -70,7 +70,7 @@ namespace Engine
         {
             switch (secret) {
                 case Game.Secret.marine:
-                    if (Owner != game.ActivePlayer())
+                    if (Owner != game.ActivePlayer() && Owner != Player.ID.ILLEGAL)
                     {
                         return false;
                     }
@@ -80,7 +80,7 @@ namespace Engine
 
                 case Game.Secret.batallion:
 
-                    if (Owner != game.ActivePlayer())
+                    if (Owner != game.ActivePlayer() && Owner != Player.ID.ILLEGAL)
                     {
                         return false;
                     }
@@ -116,7 +116,7 @@ namespace Engine
                 {
                     evalTokenCount = evalTokenCount + f.TokenCount;
                 }
-                else
+                else if (f.Owner != Player.ID.ILLEGAL)
                 {
                     evalTokenCount = evalTokenCount - f.TokenCount;
                 }

@@ -149,6 +149,7 @@ namespace Engine
         public void EnterSecretPhase()
         {
             CurrentState.Value = GameState.State.RunningSecret;
+            distribTurn = -1;
             return;
         }
 
@@ -165,6 +166,8 @@ namespace Engine
 
         public void EnterEval()
         {
+            secretTurn = -1;
+
             fieldList.Eval();
             if (fieldList.Score(Player.ID.PLAYER1) == fieldList.Score(Player.ID.PLAYER2))
             {
@@ -177,6 +180,8 @@ namespace Engine
 
             Debug.Log("Winner");
             Debug.Log(winner);
+            Debug.Log(fieldList.Score(Player.ID.PLAYER1));
+            Debug.Log(fieldList.Score(Player.ID.PLAYER2));
             CurrentState.Value = GameState.State.Eval;
         }
     }
