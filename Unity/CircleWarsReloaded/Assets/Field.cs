@@ -17,6 +17,13 @@ namespace Engine
         public bool IsWon { get; private set; }
         public int TokenCount { get; private set; }
 
+        public enum Secret
+        {
+            marine,
+            batallion,
+            napalm
+        }
+
         private List<Field> neighbours;
         private Game game;
 
@@ -64,6 +71,12 @@ namespace Engine
         public bool requestToken()
         {
             return Game.Instance().DispatchForce(this);
+        }
+
+        public bool addSecret(Secret secret)
+        {
+            return true;
+            // TODO
         }
 
         private void evalField()

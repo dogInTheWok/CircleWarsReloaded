@@ -24,12 +24,13 @@ namespace Engine
     {
         static public int NUM_FIELDS = 12;
         static public int NUM_PLAYER = 2;
-        static public int NUM_FORCES_DISTRIB_PHASE = 14;
+        static public int NUM_FORCES_DISTRIB_PHASE = 10;
         static public int NUM_TURNS_DISTRIB = NUM_PLAYER * NUM_FORCES_DISTRIB_PHASE;
 
         public GameState CurrentState { get; private set;}
         public bool isStarted { get; private set; }
         private int distribTurn;
+        private Field.Secret secret;
 
         private PlayerList playerList;
         private FieldList fieldList;
@@ -93,27 +94,54 @@ namespace Engine
             if (distribTurn == NUM_TURNS_DISTRIB)
             {
                 EnterSecretPhase();
-                return;
             }
+
             playerList.NextPlayer();
-            distribTurn = distribTurn++;
+
+            if (CurrentState.Value == GameState.State.RunningDistribution)
+            {
+                NextDistrib();
+            } else if (CurrentState.Value == GameState.State.RunningSecret)
+            {
+                NextSecret();
+            }
         }
 
         public bool DispatchForce(Field field)
         {
-            if (field.addToken())
+            if (CurrentState.Value == GameState.State.RunningDistribution)
             {
-                NextTurn();
-                return true;
+                if (field.addToken())
+                {
+                    NextTurn();
+                    return true;
+                }
+                return false;
+            } else if (CurrentState.Value == GameState.State.RunningSecret)
+            {
+                if (field.addSecret(secret))
+                {
+                    NextTurn();
+                }
+                return false;
             }
             return false;
         }
 
         public void EnterSecretPhase()
         {
-            // TODO: state machine phases
-            Debug.Log("Enter Secrets");
+            CurrentState.Value = GameState.State.RunningSecret;
             return;
+        }
+
+        public void NextSecret()
+        {
+            secret += 1;
+        }
+
+        public void NextDistrib()
+        {
+            distribTurn += 1;
         }
     }
 
