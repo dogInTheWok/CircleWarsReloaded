@@ -16,6 +16,7 @@ public class Game {
             if( null == s_instance )
             {
                 s_instance = new Game( new GlobalFactory() );
+                s_instance.StartGame();
             }
 
             return s_instance;
@@ -39,9 +40,9 @@ public class Game {
         isStarted = false;
     }
 
-    public void Start() {
+    public void StartGame() {
 	    init();
-	    playerList.Start();
+	    playerList.StartGame();
 	    isStarted = true;
     }
 
@@ -51,10 +52,8 @@ public class Game {
 	}
 
 	private void fillPlayerList() {
-		Player player1 = new Player(Player.ID.PLAYER1);
-		Player player2 = new Player(Player.ID.PLAYER2);
-		playerList.Add(player1);
-		playerList.Add(player2);
+		playerList.Add(new Player(Player.ID.PLAYER1));
+		playerList.Add(new Player(Player.ID.PLAYER2));
 	}
 
 	public void AddPlayer(Player player){

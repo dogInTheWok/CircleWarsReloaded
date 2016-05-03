@@ -12,9 +12,9 @@ namespace Engine
     {
         public bool IsActive { get; set; }
         public Player.ID Owner { get; set; }
+        public int FieldId { get; set; }
 
         public bool IsWon { get; private set; }
-        public int FieldId { get; private set; }
         public int TokenCount { get; private set; }
 
         private List<Field> neighbours;
@@ -24,6 +24,17 @@ namespace Engine
         {
             Owner = Player.ID.ILLEGAL;
             FieldId = -1;
+            TokenCount = 0;
+            IsActive = true;
+            IsWon = false;
+            neighbours = new List<Field>();
+            game = Game.Instance();
+        }
+
+        public Field(int id)
+        {
+            Owner = Player.ID.ILLEGAL;
+            FieldId = id;
             TokenCount = 0;
             IsActive = true;
             IsWon = false;

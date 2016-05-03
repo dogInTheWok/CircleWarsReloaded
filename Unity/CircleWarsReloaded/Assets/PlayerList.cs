@@ -16,7 +16,7 @@ public class PlayerList {
     }
 
     public void Add(Player player) {
-        if( players.Contains(player) || players.Length >= maxPlayer )
+        if( players.Contains(player) || currentNumberOfPlayers >= maxPlayer )
             return;
 
 	    players[currentNumberOfPlayers] = player;
@@ -35,7 +35,7 @@ public class PlayerList {
 		return activePlayer.id;
 	}
 
-	public void Start() {
+	public void StartGame() {
 		foreach (Player p in players) {
             p.isActive = false;
 		}

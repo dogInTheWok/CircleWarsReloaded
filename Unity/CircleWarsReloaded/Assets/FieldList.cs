@@ -20,7 +20,7 @@ public class FieldList {
                 return null;
             }
 
-            fields[currentNumberOfFields] = new Field();
+            fields[currentNumberOfFields] = new Field(currentNumberOfFields);
             currentNumberOfFields++;
             return fields[currentNumberOfFields - 1];
     }
