@@ -103,6 +103,16 @@ namespace Engine
 
         public void NextTurn()
         {
+            playerList.NextPlayer();
+
+            if (CurrentState.Value == GameState.State.RunningDistribution)
+            {
+                NextDistrib();
+            } else if (CurrentState.Value == GameState.State.RunningSecret)
+            {
+                NextSecret();
+            }
+
             if (distribTurn == NUM_TURNS_DISTRIB)
             {
                 EnterSecretPhase();
@@ -113,15 +123,6 @@ namespace Engine
                 EnterEval();
             }
             Debug.Log(secretTurn);
-            playerList.NextPlayer();
-
-            if (CurrentState.Value == GameState.State.RunningDistribution)
-            {
-                NextDistrib();
-            } else if (CurrentState.Value == GameState.State.RunningSecret)
-            {
-                NextSecret();
-            }
         }
 
         public bool DispatchForce(Field field)
