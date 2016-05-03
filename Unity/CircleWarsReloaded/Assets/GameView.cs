@@ -3,7 +3,7 @@ using System.Collections;
 using Engine;
 
 public class GameView : MonoBehaviour {
-    private Game game;
+    public Game Game { get; private set; }
 
 	// Use this for initialization
 	void Start () {

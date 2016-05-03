@@ -55,7 +55,7 @@
      <Compile Include="Assets\GlobalFactory.cs" />
      <Compile Include="Assets\Player.cs" />
      <Compile Include="Assets\PlayerList.cs" />
-     <Compile Include="Assets\TextView.cs" />
+     <Compile Include="Assets\StatusTextView.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
