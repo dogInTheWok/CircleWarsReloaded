@@ -122,7 +122,7 @@ namespace Engine
             {
                 EnterEval();
             }
-            Debug.Log(secretTurn);
+            Debug.Log(secret);
         }
 
         public bool DispatchForce(Field field)
@@ -156,7 +156,7 @@ namespace Engine
         public void NextSecret()
         {
             secretTurn += 1;
-            secret = (Secret)(secretTurn % 2);
+            secret = (Secret)(secretTurn / 2);
         }
 
         public void NextDistrib()
