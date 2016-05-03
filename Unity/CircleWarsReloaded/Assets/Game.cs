@@ -25,7 +25,7 @@ public class Game {
     static private Game s_instance;
 
     public bool isStarted { get; private set; }
-	private int distribTurn;
+	private static int distribTurn;
 
     private PlayerList playerList;
 	private FieldList fieldList;
@@ -80,6 +80,7 @@ public class Game {
             }
 		playerList.NextPlayer();
 		distribTurn = distribTurn++;
+        Debug.Log(distribTurn);
 	}
 
 	public bool DispatchForce(Field field) {
@@ -94,6 +95,7 @@ public class Game {
     public void EnterSecretPhase()
         {
             // TODO: state machine phases
+            Debug.Log("Enter Secrets");
             return;
         }
 }
