@@ -61,6 +61,11 @@ namespace Engine
             return true;
         }
 
+        public bool requestToken()
+        {
+            return Game.Instance().DispatchForce(this);
+        }
+
         private void evalField()
         {
             /* determine if field has isWon combat for its owner */
