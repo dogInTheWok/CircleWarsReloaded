@@ -1,7 +1,7 @@
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2008
-
-Project("{EE9BD49E-774F-06D5-5F2C-C5D8C94385A9}") = "CircleWarsReloaded", "Assembly-CSharp.csproj", "{526AD095-C847-920B-DCB7-4DC05BAAAE21}"
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CircleWarsReloaded.CSharp", "CircleWarsReloaded.CSharp.csproj", "{4F343FF9-5FA4-8F4D-D2BA-411F1258439B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,15 +9,12 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{526AD095-C847-920B-DCB7-4DC05BAAAE21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{526AD095-C847-920B-DCB7-4DC05BAAAE21}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{526AD095-C847-920B-DCB7-4DC05BAAAE21}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{526AD095-C847-920B-DCB7-4DC05BAAAE21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F343FF9-5FA4-8F4D-D2BA-411F1258439B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F343FF9-5FA4-8F4D-D2BA-411F1258439B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F343FF9-5FA4-8F4D-D2BA-411F1258439B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F343FF9-5FA4-8F4D-D2BA-411F1258439B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Assembly-CSharp.csproj
 	EndGlobalSection
 EndGlobal

@@ -5,6 +5,7 @@ using Engine;
 public class FieldView : MonoBehaviour {
 
     [SerializeField] private BoardView boardView;
+
     private Field field;
 
     public void Start()
