@@ -69,6 +69,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\AdjustToScreen.cs" />
     <Compile Include="Assets\BoardView.cs" />
     <Compile Include="Assets\Field.cs" />
     <Compile Include="Assets\FieldList.cs" />

@@ -6,7 +6,6 @@ public class FieldView : MonoBehaviour {
 
     [SerializeField] private BoardView boardView;
     [SerializeField] private FieldView[] neighbours;
-
     public Field Field { get; private set; }
 
     public void Start()
