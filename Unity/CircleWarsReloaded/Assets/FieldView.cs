@@ -5,16 +5,23 @@ using Engine;
 public class FieldView : MonoBehaviour {
 
     [SerializeField] private BoardView boardView;
-    private Field field;
+    [SerializeField] private FieldView[] neighbours;
+
+    public Field Field { get; private set; }
 
     public void Start()
     {
-        field = Game.Instance().createField();
+        Field = Game.Instance().createField();
+
+        foreach( FieldView view in neighbours)
+        {
+            //Field.addNeighbour(view.Field);
+        }
     }
 
     public void OnMouseDown()
     {
-        if (!field.addToken())
+        if (!Field.addToken())
             return;
 
         addVisualToken();
@@ -23,10 +30,10 @@ public class FieldView : MonoBehaviour {
     public void addVisualToken()
     {
 
-        if (field.Owner == Player.ID.PLAYER1)
+        if (Field.Owner == Player.ID.PLAYER1)
         {
             boardView.addPlayer0Token();
-        } else if (field.Owner == Player.ID.PLAYER2)
+        } else if (Field.Owner == Player.ID.PLAYER2)
         {
             boardView.addPlayer1Token();
         }

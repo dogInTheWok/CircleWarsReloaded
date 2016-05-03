@@ -30,6 +30,11 @@ namespace Engine
             game = Game.Instance();
         }
 
+        public void addNeighbour( Field neigbhour )
+        {
+            //TODO
+            //neighbours
+        }
         public bool addToken()
         {
             if (Owner == Player.ID.ILLEGAL)
