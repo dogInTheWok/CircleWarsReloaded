@@ -5,19 +5,25 @@
 namespace Engine {
 
 public class FieldList {
-	Field[] fields;
+	private Field[] fields;
+    private int currentNumberOfFields;
 
 	public FieldList(int num_fields) {
 		fields = new Field[Game.NUM_FIELDS];
-		fill();
+        currentNumberOfFields = 0;
 	}
 
-	private void fill() {
-		for(int i = 0; i < Game.NUM_FIELDS; i++)
-		{
-			fields[i] = new Field();
-		}
-	}
+    public Field createField()
+    {
+            if( currentNumberOfFields >= Game.NUM_FIELDS )
+            {
+                return null;
+            }
+
+            fields[currentNumberOfFields] = new Field();
+            currentNumberOfFields++;
+            return fields[currentNumberOfFields - 1];
+    }
 
 	public int size() {
 		return fields.Length;

@@ -30,7 +30,7 @@ public class Game {
 	private FieldList fieldList;
     
     public Field createField() {
-            return null;
+            return fieldList.createField();
     }
 
     public Game(GlobalFactory factory){
