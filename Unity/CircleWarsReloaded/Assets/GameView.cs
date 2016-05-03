@@ -15,7 +15,7 @@ public class GameView : MonoBehaviour {
 	
 	}
 
-    public void onClickStartButton()
+    public void OnClickStartButton()
     {
         Game.StartGame();
     }
