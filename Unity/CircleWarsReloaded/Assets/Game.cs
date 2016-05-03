@@ -117,6 +117,7 @@ namespace Engine
         public void EnterSecretPhase()
         {
             // TODO: state machine phases
+            Debug.Log("Enter Secrets");
             return;
         }
     }
