@@ -22,21 +22,12 @@ namespace Engine
 
     public class Game : GameSingleton
     {
-        public enum State
-        {
-            NotStarted,
-            RunningDrawingPhase,
-            RunningSecretPhase,
-            Aborted,
-            Won
-        }
-
         static public int NUM_FIELDS = 12;
         static public int NUM_PLAYER = 2;
         static public int NUM_FORCES_DISTRIB_PHASE = 14;
         static public int NUM_TURNS_DISTRIB = NUM_PLAYER * NUM_FORCES_DISTRIB_PHASE;
 
-        public State CurrentState { get; private set;}
+        public GameState CurrentState { get; private set;}
         public bool isStarted { get; private set; }
         private int distribTurn;
 
@@ -53,7 +44,7 @@ namespace Engine
             playerList = factory.createPlayerList();
             fieldList = factory.createFieldList();
             isStarted = false;
-            CurrentState = Game.State.NotStarted;
+            CurrentState.Value = GameState.State.NotStarted;
         }
 
         public void StartGame()
@@ -61,7 +52,7 @@ namespace Engine
             init();
             playerList.StartGame();
             isStarted = true;
-            CurrentState = Game.State.RunningDrawingPhase;
+            CurrentState.Value = GameState.State.RunningDistribution;
         }
 
         private void init()

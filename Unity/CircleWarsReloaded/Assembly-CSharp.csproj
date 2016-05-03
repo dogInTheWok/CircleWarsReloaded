@@ -51,6 +51,7 @@
      <Compile Include="Assets\FieldList.cs" />
      <Compile Include="Assets\FieldView.cs" />
      <Compile Include="Assets\Game.cs" />
+     <Compile Include="Assets\GameState.cs" />
      <Compile Include="Assets\GameView.cs" />
      <Compile Include="Assets\GlobalFactory.cs" />
      <Compile Include="Assets\Player.cs" />
