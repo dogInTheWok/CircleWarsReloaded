@@ -61,10 +61,10 @@ namespace Engine
             return Game.Instance().DispatchForce(this);
         }
 
-        public bool addSecret(Game.Secret secret)
+        public bool addSecret(SecretPhaseState.State secretValue)
         {
-            switch (secret) {
-                case Game.Secret.marine:
+            switch (secretValue) {
+                case SecretPhaseState.State.Batillion:
                     if (Owner != game.ActivePlayer() && Owner != Player.ID.ILLEGAL)
                     {
                         return false;
@@ -74,7 +74,7 @@ namespace Engine
                     HasMarine = true;
                     break;
 
-                case Game.Secret.batallion:
+                case SecretPhaseState.State.Marine:
 
                     if (Owner != game.ActivePlayer() && Owner != Player.ID.ILLEGAL)
                     {
@@ -87,7 +87,7 @@ namespace Engine
                     HasBatillion = true;
                     break;
 
-                case Game.Secret.napalm:
+                case SecretPhaseState.State.Napalm:
                     if (Owner == game.ActivePlayer())
                     {
                         return false;

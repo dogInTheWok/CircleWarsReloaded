@@ -12,7 +12,7 @@ public class FieldView : MonoBehaviour {
         }
         public override void OnStateChange(GameState.State state)
         {
-            if( GameState.State.Eval == state )
+            if( GameState.State.Evaluating == state )
             {
                 parent.AddNeighbours();
 

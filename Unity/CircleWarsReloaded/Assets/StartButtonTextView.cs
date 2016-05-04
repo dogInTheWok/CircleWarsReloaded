@@ -17,6 +17,9 @@ public class StartButtonTextView : MonoBehaviour {
                 case GameState.State.NotStarted:
                     parentText.text = "Start";
                     break;
+                case GameState.State.Terminated:
+                    parentText.text = "Start";
+                    break;
                 default:
                     parentText.text = "Restart";
                     break;

@@ -14,7 +14,7 @@ public class StatusTextView: MonoBehaviour {
         public override void OnStateChange(GameState.State state )
         {
             text.text = state.ToString();
-            if (state == GameState.State.Eval)
+            if (state == GameState.State.Terminated)
             {
                 text.text = Game.Instance().winner.ToString() + " wins!";
             }

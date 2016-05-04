@@ -30,21 +30,14 @@ namespace Engine
         static public int NUM_TURNS_SECRET = NUM_PLAYER * NUM_SECRETS;
 
         public GameState CurrentGameState { get; private set;}
+        public SecretPhaseState CurrentSecretPhaseState { get; private set; }
         public bool isStarted { get; private set; }
         private int distribTurn;
         private int secretTurn;
-        private Secret secret;
         public Player.ID winner { get; private set; }
 
         private PlayerList playerList;
         private FieldList fieldList;
-
-        public enum Secret
-        {
-            marine,
-            batallion,
-            napalm
-        }
 
         public Field createField()
         {
@@ -58,6 +51,8 @@ namespace Engine
             isStarted = false;
             CurrentGameState = new GameState();
             CurrentGameState.Value = GameState.State.NotStarted;
+            CurrentSecretPhaseState = new SecretPhaseState();
+            CurrentSecretPhaseState.Value = SecretPhaseState.State.NotEntered;
         }
 
         public void StartGame()
@@ -122,7 +117,7 @@ namespace Engine
             {
                 EnterEval();
             }
-            Debug.Log(secret);
+            Debug.Log(CurrentSecretPhaseState.Value);
         }
 
         public bool DispatchForce(Field field)
@@ -137,7 +132,7 @@ namespace Engine
                 return false;
             } else if (CurrentGameState.Value == GameState.State.RunningSecret)
             {
-                if (field.addSecret(secret))
+                if (field.addSecret(CurrentSecretPhaseState.Value))
                 {
                     NextTurn();
                 }
@@ -149,6 +144,7 @@ namespace Engine
         public void EnterSecretPhase()
         {
             CurrentGameState.Value = GameState.State.RunningSecret;
+            CurrentSecretPhaseState.Value = SecretPhaseState.State.Batillion;
             distribTurn = -1;
             return;
         }
@@ -156,7 +152,19 @@ namespace Engine
         public void NextSecret()
         {
             secretTurn += 1;
-            secret = (Secret)(secretTurn / 2);
+            switch( CurrentSecretPhaseState.Value )
+            {
+                case SecretPhaseState.State.Batillion:
+                    CurrentSecretPhaseState.Value = SecretPhaseState.State.Marine;
+                    break;
+                case SecretPhaseState.State.Marine:
+                    CurrentSecretPhaseState.Value = SecretPhaseState.State.Napalm;
+                    break;
+                default:
+                    Debug.Log("WARNING: Game::NextPhase: default case entered.");
+                    CurrentSecretPhaseState.Value = SecretPhaseState.State.Batillion;
+                    break;
+            }
         }
 
         public void NextDistrib()
@@ -166,6 +174,7 @@ namespace Engine
 
         public void EnterEval()
         {
+            CurrentGameState.Value = GameState.State.Evaluating;
             secretTurn = -1;
 
             fieldList.Eval();
@@ -182,7 +191,7 @@ namespace Engine
             Debug.Log(winner);
             Debug.Log(fieldList.Score(Player.ID.PLAYER1));
             Debug.Log(fieldList.Score(Player.ID.PLAYER2));
-            CurrentGameState.Value = GameState.State.Eval;
+            CurrentGameState.Value = GameState.State.Terminated;
         }
     }
 

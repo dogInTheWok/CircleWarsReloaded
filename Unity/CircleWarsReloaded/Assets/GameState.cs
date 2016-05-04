@@ -9,7 +9,8 @@ namespace Engine
             NotStarted,
             RunningDistribution,
             RunningSecret,
-            Eval
+            Evaluating,
+            Terminated
         }
         
         public abstract class Listener
