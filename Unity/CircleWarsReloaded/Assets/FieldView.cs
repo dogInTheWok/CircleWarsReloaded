@@ -26,7 +26,6 @@ public class FieldView : MonoBehaviour {
     public void OnMouseDown()
     {
         Vector3 p = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Debug.Log(p);
         if (!Field.requestToken())
             return;
 

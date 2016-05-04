@@ -68,6 +68,7 @@
     <Compile Include="Assets\AdjustToScreen.cs" />
     <Compile Include="Assets\BoardView.cs" />
     <Compile Include="Assets\CWState.cs" />
+    <Compile Include="Assets\Logging.cs" />
     <Compile Include="Assets\PlayerState.cs" />
     <Compile Include="Assets\Field.cs" />
     <Compile Include="Assets\FieldList.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="Assets\GlobalFactory.cs" />
     <Compile Include="Assets\Player.cs" />
     <Compile Include="Assets\PlayerList.cs" />
+    <Compile Include="Assets\Singleton.cs" />
     <Compile Include="Assets\StartButtonTextView.cs" />
     <Compile Include="Assets\StatusTextView.cs" />
   </ItemGroup>

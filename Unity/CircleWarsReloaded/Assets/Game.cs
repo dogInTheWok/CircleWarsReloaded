@@ -6,21 +6,7 @@ using System.Collections;
 
 namespace Engine
 {
-    public class GameSingleton
-    {
-        static public Game Instance()
-        {
-            if (null == s_instance)
-            {
-                s_instance = new Game(new GlobalFactory());
-            }
-
-            return s_instance;
-        }
-        static private Game s_instance;
-    }
-
-    public class Game : GameSingleton
+    public class Game : Singleton<Game>
     {
         static public int NUM_FIELDS = 12;
         static public int NUM_PLAYER = 2;
@@ -61,8 +47,9 @@ namespace Engine
             return fieldList.createField();
         }
 
-        public Game(GlobalFactory factory)
+        public Game()
         {
+            var factory = GlobalFactory.Instance();
             playerList = factory.createPlayerList();
             fieldList = factory.createFieldList();
             isStarted = false;
