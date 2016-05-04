@@ -7,11 +7,13 @@ using System;
 public class BoardView : MonoBehaviour
 {
     [SerializeField]
-    private GameObject redToken;
+    private Color colorPlayer1;
     [SerializeField]
-    private GameObject blueToken;
+    private Color colorPlayer2;
     [SerializeField]
-    private GameObject blackToken;
+    private GameObject playerToken;
+    [SerializeField]
+    private GameObject inactiveToken;
 
     private List<GameObject> addedTokens;
 
@@ -38,21 +40,23 @@ public class BoardView : MonoBehaviour
     }
     public void addPlayer0Token(Vector2 pos)
     {
-        var addedToken = Instantiate(blueToken);
+        var addedToken = Instantiate(playerToken);
+        addedToken.GetComponent<SpriteRenderer>().color = colorPlayer1;
         addedToken.transform.position = pos;
         addedTokens.Add(addedToken);
     }
 
     public void addPlayer1Token(Vector2 pos)
     {
-        var addedToken = Instantiate(redToken);
+        var addedToken = Instantiate(playerToken);
+        addedToken.GetComponent<SpriteRenderer>().color = colorPlayer2;
         addedToken.transform.position = pos;
         addedTokens.Add(addedToken);
     }
 
     public void addInactiveToken(Vector2 pos)
     {
-        var addedToken = Instantiate(blackToken);
+        var addedToken = Instantiate(inactiveToken);
         addedToken.transform.position = pos;
         addedTokens.Add(addedToken);
     }
