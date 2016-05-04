@@ -1,7 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using Engine;
+using System;
 
 public class BoardView : MonoBehaviour {
+    public class StateListener : GameState.Listener
+    {
+        public StateListener( BoardView parent )
+        {
+            this.parent = parent;
+        }
+        public override void OnStateChange(GameState.State state)
+        {
+            if( GameState.State.NotStarted == state )
+            {
+                parent.ClearBoard();
+            }
+        }
+        private BoardView parent;
+    }
 
     [SerializeField]
     private GameObject redToken;
@@ -9,7 +27,8 @@ public class BoardView : MonoBehaviour {
     private GameObject blueToken;
     [SerializeField]
     private GameObject blackToken;
-    private GameObject addedToken;
+
+    private List<GameObject> addedTokens;
 
     // Use this for initialization
     void Start () {
@@ -23,19 +42,27 @@ public class BoardView : MonoBehaviour {
 
     public void addPlayer0Token( Vector2 pos )
     {
-        addedToken = Instantiate(blueToken);
+        var addedToken = Instantiate(blueToken);
         addedToken.transform.position = pos;
+        addedTokens.Add(addedToken);
     }
 
     public void addPlayer1Token( Vector2 pos )
     {
-        addedToken = Instantiate(redToken);
+        var addedToken = Instantiate(redToken);
         addedToken.transform.position = pos;
+        addedTokens.Add(addedToken);
     }
 
     public void addInactiveToken( Vector2 pos )
     {
-        addedToken = Instantiate(blackToken);
+        var addedToken = Instantiate(blackToken);
         addedToken.transform.position = pos;
+        addedTokens.Add(addedToken);
+    }
+
+    public void ClearBoard()
+    {
+        addedTokens.Clear();
     }
 }
