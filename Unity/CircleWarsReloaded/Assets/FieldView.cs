@@ -4,38 +4,12 @@ using Engine;
 using System;
 
 public class FieldView : MonoBehaviour {
-    public class StateListener : CWState<Game.GameState>.Listener
-    {
-        public StateListener( FieldView parent)
-        {
-            this.parent = parent;
-        }
-        public override void OnStateChange(Game.GameState state)
-        {
-            if( Game.GameState.Evaluating == state )
-            {
-                parent.AddNeighbours();
 
-                if( parent.Field.HasBatillion )
-                {
-                    parent.AddThreeVisualTokens();
-                }
-                else if( parent.Field.HasMarine )
-                {
-                    parent.addVisualToken();
-                }
-
-                parent.AddBlackToken();
-            }
-        }
-        private FieldView parent;
-    } 
 
     [SerializeField] private BoardView boardView;
     [SerializeField] private FieldView[] neighbours;
     [SerializeField] private Vector2 identPoint;
     private Vector2 tokenPoint;
-    private StateListener stateListener;
     private Vector2 fieldPosition;
 
     private static Vector2 MOVE_NEXT_TOKEN = new Vector2(15, 5);
@@ -45,8 +19,7 @@ public class FieldView : MonoBehaviour {
     public void Start()
     {
         Field = Game.Instance().createField();
-        stateListener = new StateListener( this );
-        Game.Instance().CurrentGameState.ConnectTo(stateListener);
+        Game.Instance().CurrentGameState.ConnectTo(OnStateChange);
         tokenPoint = identPoint;
     }
 
@@ -58,6 +31,26 @@ public class FieldView : MonoBehaviour {
             return;
 
         addVisualToken();
+    }
+
+    // Implement Slot for GameState
+    public void OnStateChange(Game.GameState state)
+    {
+        if (Game.GameState.Evaluating == state)
+        {
+            AddNeighbours();
+
+            if (Field.HasBatillion)
+            {
+                AddThreeVisualTokens();
+            }
+            else if (Field.HasMarine)
+            {
+                addVisualToken();
+            }
+
+            AddBlackToken();
+        }
     }
 
     public void addVisualToken()

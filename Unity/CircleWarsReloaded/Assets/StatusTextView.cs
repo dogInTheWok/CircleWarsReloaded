@@ -3,38 +3,33 @@ using UnityEngine.UI;
 using System.Collections;
 using Engine;
 
-public class StatusTextView: MonoBehaviour {
+public class StatusTextView : MonoBehaviour
+{
+    [SerializeField]
+    private GameView gameView;
 
-    class StateListener : CWState<Game.GameState>.Listener
-    {
-        public StateListener( Text parent)
-        {
-            text = parent;
-        }
-        public override void OnStateChange(Game.GameState state )
-        {
-            text.text = state.ToString();
-            if (state == Game.GameState.Terminated)
-            {
-                text.text = Game.Instance().winner.ToString() + " wins!";
-            }
-        }
-        private Text text;
-    }
-
-    [SerializeField] private GameView gameView;
-    private StateListener stateListener;
-    
+    private Text text;
 
     // Use this for initialization
-	void Start () {
-        var text = GetComponent<Text>();
-        stateListener = new StateListener(text);
-        gameView.Game.CurrentGameState.ConnectTo(stateListener);
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    void Start()
+    {
+        text = GetComponent<Text>();
+        gameView.Game.CurrentGameState.ConnectTo(OnStateChange);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+    // Implement slot on GameStateChange
+    public void OnStateChange(Game.GameState state)
+    {
+        text.text = state.ToString();
+        if (state == Game.GameState.Terminated)
+        {
+            text.text = Game.Instance().winner.ToString() + " wins!";
+        }
+    }
 }

@@ -4,23 +4,8 @@ using System.Collections.Generic;
 using Engine;
 using System;
 
-public class BoardView : MonoBehaviour {
-    public class StateListener : CWState<Game.GameState>.Listener
-    {
-        public StateListener( BoardView parent )
-        {
-            this.parent = parent;
-        }
-        public override void OnStateChange(Game.GameState state)
-        {
-            if( Game.GameState.NotStarted == state )
-            {
-                parent.ClearBoard();
-            }
-        }
-        private BoardView parent;
-    }
-
+public class BoardView : MonoBehaviour
+{
     [SerializeField]
     private GameObject redToken;
     [SerializeField]
@@ -31,32 +16,41 @@ public class BoardView : MonoBehaviour {
     private List<GameObject> addedTokens;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         addedTokens = new List<GameObject>();
-        stateListener = new StateListener(this);
-        Game.Instance().CurrentGameState.ConnectTo(stateListener);
+        Game.Instance().CurrentGameState.ConnectTo(OnStateChange);
     }
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 
-    public void addPlayer0Token( Vector2 pos )
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+    // Connection to GameState
+    public void OnStateChange(Game.GameState state)
+    {
+        if (Game.GameState.NotStarted == state)
+        {
+            ClearBoard();
+        }
+    }
+    public void addPlayer0Token(Vector2 pos)
     {
         var addedToken = Instantiate(blueToken);
         addedToken.transform.position = pos;
         addedTokens.Add(addedToken);
     }
 
-    public void addPlayer1Token( Vector2 pos )
+    public void addPlayer1Token(Vector2 pos)
     {
         var addedToken = Instantiate(redToken);
         addedToken.transform.position = pos;
         addedTokens.Add(addedToken);
     }
 
-    public void addInactiveToken( Vector2 pos )
+    public void addInactiveToken(Vector2 pos)
     {
         var addedToken = Instantiate(blackToken);
         addedToken.transform.position = pos;
@@ -67,6 +61,4 @@ public class BoardView : MonoBehaviour {
     {
         addedTokens.Clear();
     }
-
-    private StateListener stateListener;
 }
