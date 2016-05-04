@@ -60,10 +60,6 @@ namespace Engine
             init();
         }
         
-        private void OnActivePlayerChange( Player player)
-        {
-            
-        }
         public void StartGame()
         {
             playerList.StartGame();

@@ -26,11 +26,6 @@ namespace Engine
         {
             if (players.Contains(player) || currentNumberOfPlayers >= maxPlayer)
                 return;
-            
-            if( currentNumberOfPlayers == 0 )
-            {
-                ActivePlayer.Value = Player.ID.PLAYER1;
-            }
             players[currentNumberOfPlayers] = player;
             currentNumberOfPlayers++;
         }
@@ -46,6 +41,9 @@ namespace Engine
             {
                 p.isActive = false;
             }
+
+            ActivePlayer.Value = Player.ID.PLAYER1;
+            players[0].isActive = true;
         }
 
         public void NextPlayer()

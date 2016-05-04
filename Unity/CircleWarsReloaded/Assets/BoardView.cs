@@ -11,9 +11,11 @@ public class BoardView : MonoBehaviour
     [SerializeField]
     private Color colorPlayer2;
     [SerializeField]
-    private GameObject playerToken;
+    private Color colorInactive;
     [SerializeField]
-    private GameObject inactiveToken;
+    private GameObject token;
+    [SerializeField]
+    private GameObject inactiveMarker;
 
     private List<GameObject> addedTokens;
 
@@ -41,7 +43,7 @@ public class BoardView : MonoBehaviour
     }
     public void addPlayer0Token(Vector2 pos)
     {
-        var addedToken = Instantiate(playerToken);
+        var addedToken = Instantiate(token);
         addedToken.GetComponent<SpriteRenderer>().color = colorPlayer1;
         addedToken.transform.position = pos;
         addedTokens.Add(addedToken);
@@ -49,7 +51,7 @@ public class BoardView : MonoBehaviour
 
     public void addPlayer1Token(Vector2 pos)
     {
-        var addedToken = Instantiate(playerToken);
+        var addedToken = Instantiate(token);
         addedToken.GetComponent<SpriteRenderer>().color = colorPlayer2;
         addedToken.transform.position = pos;
         addedTokens.Add(addedToken);
@@ -57,7 +59,8 @@ public class BoardView : MonoBehaviour
 
     public void addInactiveToken(Vector2 pos)
     {
-        var addedToken = Instantiate(inactiveToken);
+        var addedToken = Instantiate(inactiveMarker);
+        addedToken.GetComponent<SpriteRenderer>().color = colorInactive;
         addedToken.transform.position = pos;
         addedTokens.Add(addedToken);
     }
@@ -69,5 +72,18 @@ public class BoardView : MonoBehaviour
             Destroy(token);
         }
         addedTokens.Clear();
+    }
+
+    public Color ColorPlayer1()
+    {
+        return colorPlayer1;
+    }
+    public Color ColorPlayer2()
+    {
+        return colorPlayer2;
+    }
+    public Color ColorInactive()
+    {
+        return colorInactive;
     }
 }
