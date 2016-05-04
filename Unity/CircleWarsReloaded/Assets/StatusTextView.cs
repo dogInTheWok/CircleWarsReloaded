@@ -30,7 +30,7 @@ public class StatusTextView: MonoBehaviour {
 	void Start () {
         var text = GetComponent<Text>();
         stateListener = new StateListener(text);
-        gameView.Game.CurrentGameState.RegisterOnStateChange(stateListener);
+        gameView.Game.CurrentGameState.ConnectTo(stateListener);
 	}
 	
 	// Update is called once per frame

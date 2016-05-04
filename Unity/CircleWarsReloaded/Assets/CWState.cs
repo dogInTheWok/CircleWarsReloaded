@@ -20,7 +20,7 @@ namespace Engine
             listeners = new List<Listener>();
         }
 
-        public void RegisterOnStateChange(Listener listener)
+        public void ConnectTo(Listener listener)
         {
             listeners.Add(listener);
         }

@@ -46,7 +46,7 @@ public class FieldView : MonoBehaviour {
     {
         Field = Game.Instance().createField();
         stateListener = new StateListener( this );
-        Game.Instance().CurrentGameState.RegisterOnStateChange(stateListener);
+        Game.Instance().CurrentGameState.ConnectTo(stateListener);
         tokenPoint = identPoint;
     }
 

@@ -33,7 +33,7 @@ public class StartButtonTextView : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         stateListener = new StateListener(GetComponent<Text>());
-        Game.Instance().CurrentGameState.RegisterOnStateChange(stateListener);
+        Game.Instance().CurrentGameState.ConnectTo(stateListener);
     }
 	
 	// Update is called once per frame
