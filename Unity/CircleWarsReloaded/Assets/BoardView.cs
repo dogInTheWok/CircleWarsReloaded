@@ -35,6 +35,7 @@ public class BoardView : MonoBehaviour
     {
         if (Game.GameState.NotStarted == state)
         {
+            CWLogging.Instance().LogDebug("Clearing Board.");
             ClearBoard();
         }
     }
@@ -63,6 +64,10 @@ public class BoardView : MonoBehaviour
 
     public void ClearBoard()
     {
+        foreach( GameObject token in addedTokens )
+        {
+            Destroy(token);
+        }
         addedTokens.Clear();
     }
 }

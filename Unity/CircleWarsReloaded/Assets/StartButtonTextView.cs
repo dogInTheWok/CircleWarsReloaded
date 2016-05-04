@@ -29,7 +29,7 @@ public class StartButtonTextView : MonoBehaviour
                 text.text = "Start";
                 break;
             default:
-                text.text = "Restart";
+                text.text = "Reset";
                 break;
         }
     }

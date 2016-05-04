@@ -20,6 +20,13 @@ public class GameView : MonoBehaviour
 
     public void OnClickStartButton()
     {
-        Game.StartGame();
+        if( Game.CurrentGameState.Value == Game.GameState.NotStarted )
+        {
+            Game.StartGame();
+        }
+        else
+        {
+            Game.Reset();
+        }
     }
 }

@@ -57,14 +57,23 @@ namespace Engine
             CurrentGameState.Value = GameState.NotStarted;
             CurrentSecretPhaseState = new CWState<SecretPhaseState>();
             CurrentSecretPhaseState.Value = SecretPhaseState.NotEntered;
+            init();
         }
 
         public void StartGame()
         {
-            init();
             playerList.StartGame();
             isStarted = true;
             CurrentGameState.Value = GameState.RunningDistribution;
+        }
+
+        public void Reset()
+        {
+            distribTurn = 0;
+            secretTurn = 0;
+            playerList.StartGame();
+            isStarted = true;
+            CurrentGameState.Value = GameState.NotStarted;
         }
 
         private void init()
