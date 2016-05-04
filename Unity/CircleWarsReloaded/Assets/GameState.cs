@@ -2,7 +2,6 @@ using System.Collections.Generic;
 
 namespace Engine
 {
-
     public class GameState
     {
         public enum State

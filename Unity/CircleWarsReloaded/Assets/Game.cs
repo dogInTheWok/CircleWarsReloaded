@@ -29,7 +29,7 @@ namespace Engine
         static public int NUM_TURNS_DISTRIB = NUM_PLAYER * NUM_FORCES_DISTRIB_PHASE;
         static public int NUM_TURNS_SECRET = NUM_PLAYER * NUM_SECRETS;
 
-        public GameState CurrentState { get; private set;}
+        public GameState CurrentGameState { get; private set;}
         public bool isStarted { get; private set; }
         private int distribTurn;
         private int secretTurn;
@@ -56,8 +56,8 @@ namespace Engine
             playerList = factory.createPlayerList();
             fieldList = factory.createFieldList();
             isStarted = false;
-            CurrentState = new GameState();
-            CurrentState.Value = GameState.State.NotStarted;
+            CurrentGameState = new GameState();
+            CurrentGameState.Value = GameState.State.NotStarted;
         }
 
         public void StartGame()
@@ -65,7 +65,7 @@ namespace Engine
             init();
             playerList.StartGame();
             isStarted = true;
-            CurrentState.Value = GameState.State.RunningDistribution;
+            CurrentGameState.Value = GameState.State.RunningDistribution;
         }
 
         private void init()
@@ -105,10 +105,10 @@ namespace Engine
         {
             playerList.NextPlayer();
 
-            if (CurrentState.Value == GameState.State.RunningDistribution)
+            if (CurrentGameState.Value == GameState.State.RunningDistribution)
             {
                 NextDistrib();
-            } else if (CurrentState.Value == GameState.State.RunningSecret)
+            } else if (CurrentGameState.Value == GameState.State.RunningSecret)
             {
                 NextSecret();
             }
@@ -127,7 +127,7 @@ namespace Engine
 
         public bool DispatchForce(Field field)
         {
-            if (CurrentState.Value == GameState.State.RunningDistribution)
+            if (CurrentGameState.Value == GameState.State.RunningDistribution)
             {
                 if (field.addToken())
                 {
@@ -135,7 +135,7 @@ namespace Engine
                     return true;
                 }
                 return false;
-            } else if (CurrentState.Value == GameState.State.RunningSecret)
+            } else if (CurrentGameState.Value == GameState.State.RunningSecret)
             {
                 if (field.addSecret(secret))
                 {
@@ -148,7 +148,7 @@ namespace Engine
 
         public void EnterSecretPhase()
         {
-            CurrentState.Value = GameState.State.RunningSecret;
+            CurrentGameState.Value = GameState.State.RunningSecret;
             distribTurn = -1;
             return;
         }
@@ -182,7 +182,7 @@ namespace Engine
             Debug.Log(winner);
             Debug.Log(fieldList.Score(Player.ID.PLAYER1));
             Debug.Log(fieldList.Score(Player.ID.PLAYER2));
-            CurrentState.Value = GameState.State.Eval;
+            CurrentGameState.Value = GameState.State.Eval;
         }
     }
 
