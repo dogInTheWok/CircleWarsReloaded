@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>Android:13</UnityBuildTarget>
     <UnityVersion>5.3.4f1</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -68,16 +66,18 @@
     <Compile Include="Assets\AdjustToScreen.cs" />
     <Compile Include="Assets\BoardView.cs" />
     <Compile Include="Assets\CWState.cs" />
-    <Compile Include="Assets\Logging.cs" />
-    <Compile Include="Assets\PlayerState.cs" />
+    <Compile Include="Assets\CurrentPlayerTextView.cs" />
     <Compile Include="Assets\Field.cs" />
     <Compile Include="Assets\FieldList.cs" />
     <Compile Include="Assets\FieldView.cs" />
     <Compile Include="Assets\Game.cs" />
     <Compile Include="Assets\GameView.cs" />
     <Compile Include="Assets\GlobalFactory.cs" />
+    <Compile Include="Assets\Logging.cs" />
+    <Compile Include="Assets\PhaseStatusTextView.cs" />
     <Compile Include="Assets\Player.cs" />
     <Compile Include="Assets\PlayerList.cs" />
+    <Compile Include="Assets\PlayerState.cs" />
     <Compile Include="Assets\Singleton.cs" />
     <Compile Include="Assets\StartButtonTextView.cs" />
     <Compile Include="Assets\StatusTextView.cs" />
