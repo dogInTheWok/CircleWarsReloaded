@@ -11,7 +11,7 @@ namespace Engine
         static public int NUM_FIELDS = 12;
         static public int NUM_PLAYER = 2;
         static public int NUM_SECRETS = 3;
-        static public int NUM_FORCES_DISTRIB_PHASE = 2;
+        static public int NUM_FORCES_DISTRIB_PHASE = 14;
         static public int NUM_TURNS_DISTRIB = NUM_PLAYER * NUM_FORCES_DISTRIB_PHASE;
         static public int NUM_TURNS_SECRET = NUM_PLAYER * NUM_SECRETS;
 
