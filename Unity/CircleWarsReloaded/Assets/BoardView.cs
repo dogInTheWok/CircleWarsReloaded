@@ -5,15 +5,15 @@ using Engine;
 using System;
 
 public class BoardView : MonoBehaviour {
-    public class StateListener : GameState.Listener
+    public class StateListener : CWState<Game.GameState>.Listener
     {
         public StateListener( BoardView parent )
         {
             this.parent = parent;
         }
-        public override void OnStateChange(GameState.State state)
+        public override void OnStateChange(Game.GameState state)
         {
-            if( GameState.State.NotStarted == state )
+            if( Game.GameState.NotStarted == state )
             {
                 parent.ClearBoard();
             }

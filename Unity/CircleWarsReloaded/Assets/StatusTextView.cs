@@ -5,16 +5,16 @@ using Engine;
 
 public class StatusTextView: MonoBehaviour {
 
-    class StateListener : GameState.Listener
+    class StateListener : CWState<Game.GameState>.Listener
     {
         public StateListener( Text parent)
         {
             text = parent;
         }
-        public override void OnStateChange(GameState.State state )
+        public override void OnStateChange(Game.GameState state )
         {
             text.text = state.ToString();
-            if (state == GameState.State.Terminated)
+            if (state == Game.GameState.Terminated)
             {
                 text.text = Game.Instance().winner.ToString() + " wins!";
             }

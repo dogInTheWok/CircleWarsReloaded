@@ -4,20 +4,20 @@ using Engine;
 using UnityEngine.UI;
 
 public class StartButtonTextView : MonoBehaviour {
-    public class StateListener : GameState.Listener
+    public class StateListener : CWState<Game.GameState>.Listener
     {
         public StateListener( Text parentText )
         {
             this.parentText = parentText;
         }
-        public override void OnStateChange(GameState.State state)
+        public override void OnStateChange(Game.GameState state)
         {
             switch( state)
             {
-                case GameState.State.NotStarted:
+                case Game.GameState.NotStarted:
                     parentText.text = "Start";
                     break;
-                case GameState.State.Terminated:
+                case Game.GameState.Terminated:
                     parentText.text = "Start";
                     break;
                 default:

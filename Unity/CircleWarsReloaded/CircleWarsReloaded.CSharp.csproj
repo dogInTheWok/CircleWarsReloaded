@@ -67,12 +67,12 @@
   <ItemGroup>
     <Compile Include="Assets\AdjustToScreen.cs" />
     <Compile Include="Assets\BoardView.cs" />
-    <Compile Include="Assets\SecretPhaseState.cs" />
+    <Compile Include="Assets\CWState.cs" />
+    <Compile Include="Assets\PlayerState.cs" />
     <Compile Include="Assets\Field.cs" />
     <Compile Include="Assets\FieldList.cs" />
     <Compile Include="Assets\FieldView.cs" />
     <Compile Include="Assets\Game.cs" />
-    <Compile Include="Assets\GameState.cs" />
     <Compile Include="Assets\GameView.cs" />
     <Compile Include="Assets\GlobalFactory.cs" />
     <Compile Include="Assets\Player.cs" />
