@@ -35,6 +35,17 @@ namespace Engine
             HasBatillion = false;
             HasMarine = false;
             HasNapalm = false;
+            game.CurrentGameState.ConnectTo(OnStateChange);
+        }
+            
+        public void OnStateChange(Game.GameState state)
+        {
+            switch (state)
+            {
+                case Game.GameState.Terminated:
+                    Reset();
+                    break;
+            }
         }
 
         public void addNeighbour( Field neighbour )
@@ -119,6 +130,17 @@ namespace Engine
                 }
             }
             IsWon = evalTokenCount > 0;
+        }
+
+        public void Reset()
+        {
+            Owner = Player.ID.ILLEGAL;
+            TokenCount = 0;
+            IsActive = true;
+            IsWon = false;
+            HasBatillion = false;
+            HasMarine = false;
+            HasNapalm = false;
         }
     }
 } // namespace Engine

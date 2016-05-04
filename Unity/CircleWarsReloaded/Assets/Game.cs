@@ -111,8 +111,6 @@ namespace Engine
 
         public void NextTurn()
         {
-            playerList.NextPlayer();
-
             if (CurrentGameState.Value == GameState.RunningDistribution)
             {
                 NextDistrib();
@@ -173,6 +171,10 @@ namespace Engine
                 case SecretPhaseState.Marine:
                     CurrentSecretPhaseState.Value = SecretPhaseState.Napalm;
                     break;
+                case SecretPhaseState.Napalm:
+                    playerList.NextPlayer();
+                    CurrentSecretPhaseState.Value = SecretPhaseState.Batillion;
+                    break;
                 default:
                     Debug.Log("WARNING: Game::NextPhase: default case entered.");
                     CurrentSecretPhaseState.Value = SecretPhaseState.Batillion;
@@ -182,6 +184,7 @@ namespace Engine
 
         public void NextDistrib()
         {
+            playerList.NextPlayer();
             distribTurn += 1;
         }
 

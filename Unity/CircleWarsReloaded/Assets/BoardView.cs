@@ -41,7 +41,7 @@ public class BoardView : MonoBehaviour
             ClearBoard();
         }
     }
-    public void addPlayer0Token(Vector2 pos)
+    public void addPlayer1Token(Vector2 pos)
     {
         var addedToken = Instantiate(token);
         addedToken.GetComponent<SpriteRenderer>().color = colorPlayer1;
@@ -49,7 +49,7 @@ public class BoardView : MonoBehaviour
         addedTokens.Add(addedToken);
     }
 
-    public void addPlayer1Token(Vector2 pos)
+    public void addPlayer2Token(Vector2 pos)
     {
         var addedToken = Instantiate(token);
         addedToken.GetComponent<SpriteRenderer>().color = colorPlayer2;

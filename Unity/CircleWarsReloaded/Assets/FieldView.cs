@@ -35,20 +35,15 @@ public class FieldView : MonoBehaviour {
     // Implement Slot for GameState
     public void OnStateChange(Game.GameState state)
     {
-        if (Game.GameState.Evaluating == state)
+        switch (state)
         {
-            AddNeighbours();
-
-            if (Field.HasBatillion)
-            {
-                AddThreeVisualTokens();
-            }
-            else if (Field.HasMarine)
-            {
-                addVisualToken();
-            }
-
-            AddBlackToken();
+            case Game.GameState.Evaluating:
+                AddNeighbours();
+                AddEvalVisuals();
+                break;
+            case Game.GameState.NotStarted:
+                ResetVisuals();
+                break;
         }
     }
 
@@ -56,10 +51,10 @@ public class FieldView : MonoBehaviour {
     {
         if (Field.Owner == Player.ID.PLAYER1)
         {
-            boardView.addPlayer0Token(tokenPoint);
+            boardView.addPlayer1Token(tokenPoint);
         } else if (Field.Owner == Player.ID.PLAYER2)
         {
-            boardView.addPlayer1Token(tokenPoint);
+            boardView.addPlayer2Token(tokenPoint);
         }
         tokenPoint += MOVE_NEXT_TOKEN; 
     }
@@ -73,8 +68,7 @@ public class FieldView : MonoBehaviour {
 
     public void AddBlackToken()
     {
-        if (!Field.IsActive)
-            boardView.addInactiveToken(identPoint);
+        boardView.addInactiveToken(identPoint);
     }
 
     public void AddNeighbours()
@@ -83,5 +77,26 @@ public class FieldView : MonoBehaviour {
         {
             Field.addNeighbour(view.Field);
         }
+    }
+
+    public void AddEvalVisuals()
+    {
+        if (Field.HasBatillion)
+        {
+            AddThreeVisualTokens();
+        }
+        else if (Field.HasMarine)
+        {
+            addVisualToken();
+        }
+
+        if (!Field.IsActive)
+            AddBlackToken();
+
+    }
+
+    public void ResetVisuals()
+    {
+        tokenPoint = identPoint;
     }
 }
