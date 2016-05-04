@@ -12,7 +12,15 @@ public class StartButtonTextView : MonoBehaviour {
         }
         public override void OnStateChange(GameState.State state)
         {
-            
+            switch( state)
+            {
+                case GameState.State.NotStarted:
+                    parentText.text = "Start";
+                    break;
+                default:
+                    parentText.text = "Restart";
+                    break;
+            }
         }
 
         private Text parentText;
