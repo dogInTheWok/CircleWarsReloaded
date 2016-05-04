@@ -8,23 +8,29 @@ namespace Engine
 {
     public class PlayerList
     {
+        public CWState<Player.ID> ActivePlayer { get; private set; }
         private int currentNumberOfPlayers;
         private int maxPlayer;
         private Player[] players;
-        private Player activePlayer;
 
         public PlayerList(int numPlayer)
         {
             currentNumberOfPlayers = 0;
             this.maxPlayer = numPlayer;
             players = new Player[numPlayer];
+            ActivePlayer = new CWState<Player.ID>();
+            ActivePlayer.Value = Player.ID.ILLEGAL;
         }
 
         public void Add(Player player)
         {
             if (players.Contains(player) || currentNumberOfPlayers >= maxPlayer)
                 return;
-
+            
+            if( currentNumberOfPlayers == 0 )
+            {
+                ActivePlayer.Value = Player.ID.PLAYER1;
+            }
             players[currentNumberOfPlayers] = player;
             currentNumberOfPlayers++;
         }
@@ -34,53 +40,24 @@ namespace Engine
             return players.Length;
         }
 
-        public Player.ID ActivePlayer()
-        {
-            if (currentNumberOfPlayers < 1)
-            {
-                return Player.ID.ILLEGAL;
-            }
-
-            return activePlayer.id;
-        }
-
         public void StartGame()
         {
             foreach (Player p in players)
             {
                 p.isActive = false;
             }
-            activePlayer = players[0];
-            activePlayer.isActive = true;
         }
 
         public void NextPlayer()
         {
-            negateActivityOfAllPlayers();
-            activePlayer = findActivePlayer();
-            CWLogging.Instance().LogDebug(activePlayer.id.ToString());
-
-        }
-
-        private Player findActivePlayer()
-        {
-            foreach (Player p in players)
+            foreach( Player player in players )
             {
-                if (p.isActive)
-                {
-                    return p;
-                }
+                player.isActive = !player.isActive;
+                if (!player.isActive)
+                    continue;
+                ActivePlayer.Value = player.id;
             }
-
-            return null;
-        }
-
-        private void negateActivityOfAllPlayers()
-        {
-            foreach (Player p in players)
-            {
-                p.isActive = !p.isActive;
-            }
+            CWLogging.Instance().LogDebug(ActivePlayer.Value.ToString());
         }
     }
 } //Namespace Engine

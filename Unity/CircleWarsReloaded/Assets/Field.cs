@@ -46,8 +46,8 @@ namespace Engine
         {
             if (Owner == Player.ID.ILLEGAL)
             {
-                Owner = game.ActivePlayer();
-            } else if (Owner != game.ActivePlayer())
+                Owner = game.ActivePlayer().Value;
+            } else if (Owner != game.ActivePlayer().Value)
             {
                 return false;
             }
@@ -65,7 +65,7 @@ namespace Engine
         {
             switch (secretValue) {
                 case Game.SecretPhaseState.Batillion:
-                    if (Owner != game.ActivePlayer() && Owner != Player.ID.ILLEGAL)
+                    if (Owner != game.ActivePlayer().Value && Owner != Player.ID.ILLEGAL)
                     {
                         return false;
                     }
@@ -76,7 +76,7 @@ namespace Engine
 
                 case Game.SecretPhaseState.Marine:
 
-                    if (Owner != game.ActivePlayer() && Owner != Player.ID.ILLEGAL)
+                    if (Owner != game.ActivePlayer().Value && Owner != Player.ID.ILLEGAL)
                     {
                         return false;
                     }
@@ -88,7 +88,7 @@ namespace Engine
                     break;
 
                 case Game.SecretPhaseState.Napalm:
-                    if (Owner == game.ActivePlayer())
+                    if (Owner == game.ActivePlayer().Value)
                     {
                         return false;
                     }

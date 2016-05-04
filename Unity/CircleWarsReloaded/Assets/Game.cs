@@ -59,7 +59,11 @@ namespace Engine
             CurrentSecretPhaseState.Value = SecretPhaseState.NotEntered;
             init();
         }
-
+        
+        private void OnActivePlayerChange( Player player)
+        {
+            
+        }
         public void StartGame()
         {
             playerList.StartGame();
@@ -104,9 +108,9 @@ namespace Engine
             return fieldList.size();
         }
 
-        public Player.ID ActivePlayer()
+        public CWState<Player.ID> ActivePlayer()
         {
-            return playerList.ActivePlayer();
+            return playerList.ActivePlayer;
         }
 
         public void NextTurn()
