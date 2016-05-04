@@ -42,7 +42,7 @@ namespace Engine
         {
             switch (state)
             {
-                case Game.GameState.Terminated:
+                case Game.GameState.NotStarted:
                     Reset();
                     break;
             }
