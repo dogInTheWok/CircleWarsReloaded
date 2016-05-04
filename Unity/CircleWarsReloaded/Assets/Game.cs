@@ -121,7 +121,7 @@ namespace Engine
             {
                 EnterEval();
             }
-            Debug.Log(CurrentSecretPhaseState.Value);
+            CWLogging.Instance().LogDebug(CurrentSecretPhaseState.Value.ToString());
         }
 
         public bool DispatchForce(Field field)
@@ -191,10 +191,11 @@ namespace Engine
                 winner = fieldList.Score(Player.ID.PLAYER1) > fieldList.Score(Player.ID.PLAYER2) ? Player.ID.PLAYER1 : Player.ID.PLAYER2;
             }
 
-            Debug.Log("Winner");
-            Debug.Log(winner);
-            Debug.Log(fieldList.Score(Player.ID.PLAYER1));
-            Debug.Log(fieldList.Score(Player.ID.PLAYER2));
+            var logger = CWLogging.Instance();
+            logger.LogDebug("Winner");
+            logger.LogDebug(winner.ToString());
+            logger.LogDebug(fieldList.Score(Player.ID.PLAYER1).ToString());
+            logger.LogDebug(fieldList.Score(Player.ID.PLAYER2).ToString());
             CurrentGameState.Value = GameState.Terminated;
         }
     }
