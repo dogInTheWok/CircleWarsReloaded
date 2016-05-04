@@ -32,7 +32,8 @@ public class BoardView : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-
+        stateListener = new StateListener(this);
+        Game.Instance().CurrentState.RegisterOnStateChange(stateListener);
     }
 	
 	// Update is called once per frame
@@ -65,4 +66,6 @@ public class BoardView : MonoBehaviour {
     {
         addedTokens.Clear();
     }
+
+    private StateListener stateListener;
 }

@@ -74,6 +74,7 @@
     <Compile Include="Assets\GlobalFactory.cs" />
     <Compile Include="Assets\Player.cs" />
     <Compile Include="Assets\PlayerList.cs" />
+    <Compile Include="Assets\StartButtonTextView.cs" />
     <Compile Include="Assets\StatusTextView.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
