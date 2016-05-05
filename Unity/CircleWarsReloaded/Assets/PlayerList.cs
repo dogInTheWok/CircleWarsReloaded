@@ -9,34 +9,33 @@ namespace Engine
     public class PlayerList
     {
         public CWState<Player.ID> ActivePlayer { get; private set; }
-        private int currentNumberOfPlayers;
+        public int CurrentNumberOfPlayers { get; private set; }
         private int maxPlayer;
         private Player[] players;
 
         public PlayerList(int numPlayer)
         {
-            currentNumberOfPlayers = 0;
+            CurrentNumberOfPlayers = 0;
             this.maxPlayer = numPlayer;
             players = new Player[numPlayer];
             ActivePlayer = new CWState<Player.ID>();
             ActivePlayer.Value = Player.ID.ILLEGAL;
         }
 
-        public void Add(Player player)
+        public Player CreatePlayer()
         {
-            if (players.Contains(player) || currentNumberOfPlayers >= maxPlayer)
-                return;
-            players[currentNumberOfPlayers] = player;
-            currentNumberOfPlayers++;
+            if (CurrentNumberOfPlayers >= maxPlayer)
+                return null;
+            players[CurrentNumberOfPlayers] = new Player((Player.ID)CurrentNumberOfPlayers + 1); ;
+
+            return players[CurrentNumberOfPlayers++];
         }
 
-        public int Size()
+        public bool StartGame()
         {
-            return players.Length;
-        }
+            if (CurrentNumberOfPlayers < 2)
+                return false;
 
-        public void StartGame()
-        {
             foreach (Player p in players)
             {
                 p.isActive = false;
@@ -44,6 +43,7 @@ namespace Engine
 
             ActivePlayer.Value = Player.ID.PLAYER1;
             players[0].isActive = true;
+            return true;
         }
 
         public void NextPlayer()

@@ -47,6 +47,11 @@ namespace Engine
             return fieldList.createField();
         }
 
+        public Player CreatePlayer()
+        {
+            return playerList.CreatePlayer();
+        }
+
         public Game()
         {
             var factory = GlobalFactory.Instance();
@@ -62,7 +67,12 @@ namespace Engine
         
         public void StartGame()
         {
-            playerList.StartGame();
+            if( !playerList.StartGame() )
+            {
+                CWLogging.Instance().LogWarning("Game could not be started. Invalid players.");
+                return;
+            }
+
             isStarted = true;
             CurrentGameState.Value = GameState.RunningDistribution;
         }
@@ -71,32 +81,13 @@ namespace Engine
         {
             distribTurn = 0;
             secretTurn = 0;
-            playerList.StartGame();
-            isStarted = true;
             CurrentGameState.Value = GameState.NotStarted;
         }
 
         private void init()
         {
-            fillPlayerList();
             distribTurn = 0;
             secretTurn = 0;
-        }
-
-        private void fillPlayerList()
-        {
-            playerList.Add(new Player(Player.ID.PLAYER1));
-            playerList.Add(new Player(Player.ID.PLAYER2));
-        }
-
-        public void AddPlayer(Player player)
-        {
-            playerList.Add(player);
-        }
-
-        public int NumPlayer()
-        {
-            return playerList.Size();
         }
 
         public int NumFields()
