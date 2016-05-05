@@ -32,12 +32,12 @@ namespace Engine
             Napalm
         }
 
-        public CWState<GameState> CurrentGameState { get; private set;  }
+        public CWState<GameState> CurrentGameState { get; private set; }
         public CWState<SecretPhaseState> CurrentSecretPhaseState { get; private set; }
         public bool isStarted { get; private set; }
         private int distribTurn;
         private int secretTurn;
-        public Player.ID winner { get; private set; }
+        public Player.Id winner { get; private set; }
 
         private PlayerList playerList;
         private FieldList fieldList;
@@ -47,9 +47,9 @@ namespace Engine
             return fieldList.createField();
         }
 
-        public Player CreatePlayer()
+        public Player CreatePlayer(PlayerClient playerClient)
         {
-            return playerList.CreatePlayer();
+            return playerList.CreatePlayer(playerClient);
         }
 
         public Game()
@@ -64,10 +64,10 @@ namespace Engine
             CurrentSecretPhaseState.Value = SecretPhaseState.NotEntered;
             init();
         }
-        
+
         public void StartGame()
         {
-            if( !playerList.StartGame() )
+            if (!playerList.StartGame())
             {
                 CWLogging.Instance().LogWarning("Game could not be started. Invalid players.");
                 return;
@@ -95,7 +95,12 @@ namespace Engine
             return fieldList.size();
         }
 
-        public CWState<Player.ID> ActivePlayer()
+        public CWState<Player.Id> ActivePlayerId()
+        {
+            return playerList.ActivePlayerId;
+        }
+
+        public Player ActivePlayer()
         {
             return playerList.ActivePlayer;
         }
@@ -105,7 +110,8 @@ namespace Engine
             if (CurrentGameState.Value == GameState.RunningDistribution)
             {
                 NextDistrib();
-            } else if (CurrentGameState.Value == GameState.RunningSecret)
+            }
+            else if (CurrentGameState.Value == GameState.RunningSecret)
             {
                 NextSecret();
             }
@@ -132,7 +138,8 @@ namespace Engine
                     return true;
                 }
                 return false;
-            } else if (CurrentGameState.Value == GameState.RunningSecret)
+            }
+            else if (CurrentGameState.Value == GameState.RunningSecret)
             {
                 if (field.addSecret(CurrentSecretPhaseState.Value))
                 {
@@ -154,7 +161,7 @@ namespace Engine
         public void NextSecret()
         {
             secretTurn += 1;
-            switch( CurrentSecretPhaseState.Value )
+            switch (CurrentSecretPhaseState.Value)
             {
                 case SecretPhaseState.Batillion:
                     CurrentSecretPhaseState.Value = SecretPhaseState.Marine;
@@ -185,20 +192,20 @@ namespace Engine
             secretTurn = -1;
 
             fieldList.Eval();
-            if (fieldList.Score(Player.ID.PLAYER1) == fieldList.Score(Player.ID.PLAYER2))
+            if (fieldList.Score(Player.Id.PLAYER1) == fieldList.Score(Player.Id.PLAYER2))
             {
-                winner = Player.ID.ILLEGAL;
+                winner = Player.Id.ILLEGAL;
             }
             else
             {
-                winner = fieldList.Score(Player.ID.PLAYER1) > fieldList.Score(Player.ID.PLAYER2) ? Player.ID.PLAYER1 : Player.ID.PLAYER2;
+                winner = fieldList.Score(Player.Id.PLAYER1) > fieldList.Score(Player.Id.PLAYER2) ? Player.Id.PLAYER1 : Player.Id.PLAYER2;
             }
 
             var logger = CWLogging.Instance();
             logger.LogDebug("Winner");
             logger.LogDebug(winner.ToString());
-            logger.LogDebug(fieldList.Score(Player.ID.PLAYER1).ToString());
-            logger.LogDebug(fieldList.Score(Player.ID.PLAYER2).ToString());
+            logger.LogDebug(fieldList.Score(Player.Id.PLAYER1).ToString());
+            logger.LogDebug(fieldList.Score(Player.Id.PLAYER2).ToString());
             CurrentGameState.Value = GameState.Terminated;
         }
     }

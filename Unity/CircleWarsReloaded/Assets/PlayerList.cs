@@ -8,29 +8,43 @@ namespace Engine
 {
     public class PlayerList
     {
-        public CWState<Player.ID> ActivePlayer { get; private set; }
+        
+        public Player ActivePlayer { get; private set; }
         public int CurrentNumberOfPlayers { get; private set; }
         private int maxPlayer;
         private Player[] players;
+        private CWState<Player.Id> activePlayerId;
+        public CWState<Player.Id> ActivePlayerId { get; private set; }
 
         public PlayerList(int numPlayer)
         {
             CurrentNumberOfPlayers = 0;
             this.maxPlayer = numPlayer;
             players = new Player[numPlayer];
-            ActivePlayer = new CWState<Player.ID>();
-            ActivePlayer.Value = Player.ID.ILLEGAL;
+            ActivePlayerId = new CWState<Player.Id>();
+            ActivePlayerId.Value = Player.Id.ILLEGAL;
+            ActivePlayerId.ConnectTo(OnActivePlayerIdChanged);
         }
 
-        public Player CreatePlayer()
+        public Player CreatePlayer( PlayerClient playerClient)
         {
             if (CurrentNumberOfPlayers >= maxPlayer)
                 return null;
-            players[CurrentNumberOfPlayers] = new Player((Player.ID)CurrentNumberOfPlayers + 1); ;
+            players[CurrentNumberOfPlayers] = new Player((Player.Id)CurrentNumberOfPlayers + 1, playerClient); ;
 
             return players[CurrentNumberOfPlayers++];
         }
+        void OnActivePlayerIdChanged(Player.Id id)
+        {
+            var index = (int)id - 1;
+            if (index < 0 || index >= CurrentNumberOfPlayers)
+            {
+                ActivePlayer = null;
+                return;
+            }
+            ActivePlayer = players[index];
 
+        }
         public bool StartGame()
         {
             if (CurrentNumberOfPlayers < 2)
@@ -41,7 +55,7 @@ namespace Engine
                 p.isActive = false;
             }
 
-            ActivePlayer.Value = Player.ID.PLAYER1;
+            ActivePlayerId.Value = Player.Id.PLAYER1;
             players[0].isActive = true;
             return true;
         }
@@ -53,9 +67,9 @@ namespace Engine
                 player.isActive = !player.isActive;
                 if (!player.isActive)
                     continue;
-                ActivePlayer.Value = player.id;
+                ActivePlayerId.Value = player.id;
             }
-            CWLogging.Instance().LogDebug(ActivePlayer.Value.ToString());
+            CWLogging.Instance().LogDebug(ActivePlayerId.Value.ToString());
         }
     }
 } //Namespace Engine

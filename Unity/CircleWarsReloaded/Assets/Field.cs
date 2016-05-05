@@ -11,7 +11,7 @@ namespace Engine
     public class Field
     {
         public bool IsActive { get; set; }
-        public Player.ID Owner { get; set; }
+        public Player.Id Owner { get; set; }
         public int FieldId { get; set; }
 
         public bool IsWon { get; private set; }
@@ -25,7 +25,7 @@ namespace Engine
 
         public Field(int id)
         {
-            Owner = Player.ID.ILLEGAL;
+            Owner = Player.Id.ILLEGAL;
             FieldId = id;
             TokenCount = 0;
             IsActive = true;
@@ -55,10 +55,10 @@ namespace Engine
 
         public bool addToken()
         {
-            if (Owner == Player.ID.ILLEGAL)
+            if (Owner == Player.Id.ILLEGAL)
             {
-                Owner = game.ActivePlayer().Value;
-            } else if (Owner != game.ActivePlayer().Value)
+                Owner = game.ActivePlayerId().Value;
+            } else if (Owner != game.ActivePlayerId().Value)
             {
                 return false;
             }
@@ -76,7 +76,7 @@ namespace Engine
         {
             switch (secretValue) {
                 case Game.SecretPhaseState.Batillion:
-                    if (Owner != game.ActivePlayer().Value && Owner != Player.ID.ILLEGAL)
+                    if (Owner != game.ActivePlayerId().Value && Owner != Player.Id.ILLEGAL)
                     {
                         return false;
                     }
@@ -87,7 +87,7 @@ namespace Engine
 
                 case Game.SecretPhaseState.Marine:
 
-                    if (Owner != game.ActivePlayer().Value && Owner != Player.ID.ILLEGAL)
+                    if (Owner != game.ActivePlayerId().Value && Owner != Player.Id.ILLEGAL)
                     {
                         return false;
                     }
@@ -99,7 +99,7 @@ namespace Engine
                     break;
 
                 case Game.SecretPhaseState.Napalm:
-                    if (Owner == game.ActivePlayer().Value)
+                    if (Owner == game.ActivePlayerId().Value)
                     {
                         return false;
                     }
@@ -124,7 +124,7 @@ namespace Engine
                 {
                     evalTokenCount = evalTokenCount + f.TokenCount;
                 }
-                else if (f.Owner != Player.ID.ILLEGAL && f.IsActive)
+                else if (f.Owner != Player.Id.ILLEGAL && f.IsActive)
                 {
                     evalTokenCount = evalTokenCount - f.TokenCount;
                 }
@@ -134,7 +134,7 @@ namespace Engine
 
         public void Reset()
         {
-            Owner = Player.ID.ILLEGAL;
+            Owner = Player.Id.ILLEGAL;
             TokenCount = 0;
             IsActive = true;
             IsWon = false;

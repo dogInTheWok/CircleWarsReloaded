@@ -14,7 +14,7 @@ public class CurrentPlayerTextView : MonoBehaviour
     void Start()
     {
         text = GetComponent<Text>();
-        Game.Instance().ActivePlayer().ConnectTo(OnPlayerChanged);
+        Game.Instance().ActivePlayerId().ConnectTo(OnPlayerChanged);
     }
 
     // Update is called once per frame
@@ -23,17 +23,17 @@ public class CurrentPlayerTextView : MonoBehaviour
 
     }
 
-    void OnPlayerChanged(Player.ID activePlayer )
+    void OnPlayerChanged(Player.Id activePlayer )
     {
         CWLogging.Instance().LogDebug("Player changed");
         CWLogging.Instance().LogDebug(activePlayer.ToString());
         switch( activePlayer )
         {
-            case Player.ID.PLAYER1:
+            case Player.Id.PLAYER1:
                 text.text = "Player 1";
                 text.color = boardView.ColorPlayer1();
                 break;
-            case Player.ID.PLAYER2:
+            case Player.Id.PLAYER2:
                 text.text = "Player 2";
                 text.color = boardView.ColorPlayer2();
                 break;

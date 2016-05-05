@@ -41,7 +41,7 @@ public class FieldList {
             }
         }
 
-        public int Score(Player.ID playerId)
+        public int Score(Player.Id playerId)
         {
             int score = 0;
 

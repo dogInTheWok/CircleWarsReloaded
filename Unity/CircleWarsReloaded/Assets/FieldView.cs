@@ -25,8 +25,8 @@ public class FieldView : MonoBehaviour {
 
     public void OnMouseDown()
     {
-        Vector3 p = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (!Field.requestToken())
+        var activePlayer = Game.Instance().ActivePlayer();
+        if (!activePlayer.AddToken(Field))
             return;
 
         addVisualToken();
@@ -49,10 +49,10 @@ public class FieldView : MonoBehaviour {
 
     public void addVisualToken()
     {
-        if (Field.Owner == Player.ID.PLAYER1)
+        if (Field.Owner == Player.Id.PLAYER1)
         {
             boardView.addPlayer1Token(tokenPoint);
-        } else if (Field.Owner == Player.ID.PLAYER2)
+        } else if (Field.Owner == Player.Id.PLAYER2)
         {
             boardView.addPlayer2Token(tokenPoint);
         }

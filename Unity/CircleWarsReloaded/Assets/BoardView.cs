@@ -44,11 +44,12 @@ public class BoardView : MonoBehaviour
     public void addPlayer1Token(Vector2 pos)
     {
         var addedToken = Instantiate(token);
+
+        // TODO: Spawn token on server side?
         addedToken.GetComponent<SpriteRenderer>().color = colorPlayer1;
         addedToken.transform.position = pos;
         addedTokens.Add(addedToken);
     }
-
     public void addPlayer2Token(Vector2 pos)
     {
         var addedToken = Instantiate(token);
@@ -56,7 +57,6 @@ public class BoardView : MonoBehaviour
         addedToken.transform.position = pos;
         addedTokens.Add(addedToken);
     }
-
     public void addInactiveToken(Vector2 pos)
     {
         var addedToken = Instantiate(inactiveMarker);
@@ -64,7 +64,6 @@ public class BoardView : MonoBehaviour
         addedToken.transform.position = pos;
         addedTokens.Add(addedToken);
     }
-
     public void ClearBoard()
     {
         foreach( GameObject token in addedTokens )
@@ -73,7 +72,6 @@ public class BoardView : MonoBehaviour
         }
         addedTokens.Clear();
     }
-
     public Color ColorPlayer1()
     {
         return colorPlayer1;
