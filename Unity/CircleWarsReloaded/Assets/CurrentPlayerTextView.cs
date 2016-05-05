@@ -25,8 +25,6 @@ public class CurrentPlayerTextView : MonoBehaviour
 
     void OnPlayerChanged(Player.Id activePlayer )
     {
-        CWLogging.Instance().LogDebug("Player changed");
-        CWLogging.Instance().LogDebug(activePlayer.ToString());
         switch( activePlayer )
         {
             case Player.Id.PLAYER1:

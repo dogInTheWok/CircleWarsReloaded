@@ -125,7 +125,6 @@ namespace Engine
             {
                 EnterEval();
             }
-            CWLogging.Instance().LogDebug(CurrentSecretPhaseState.Value.ToString());
         }
 
         public bool DispatchForce(Field field)

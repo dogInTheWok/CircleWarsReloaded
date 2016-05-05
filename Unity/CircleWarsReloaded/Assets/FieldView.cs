@@ -26,7 +26,7 @@ public class FieldView : MonoBehaviour {
     public void OnMouseDown()
     {
         var activePlayer = Game.Instance().ActivePlayer();
-        if (!activePlayer.AddToken(Field))
+        if (!activePlayer.Client.AddToken(Field))
             return;
 
         addVisualToken();

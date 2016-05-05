@@ -13,8 +13,6 @@ public class BoardView : MonoBehaviour
     [SerializeField]
     private Color colorInactive;
     [SerializeField]
-    private GameObject token;
-    [SerializeField]
     private GameObject inactiveMarker;
 
     private List<GameObject> addedTokens;
@@ -43,19 +41,11 @@ public class BoardView : MonoBehaviour
     }
     public void addPlayer1Token(Vector2 pos)
     {
-        var addedToken = Instantiate(token);
-
-        // TODO: Spawn token on server side?
-        addedToken.GetComponent<SpriteRenderer>().color = colorPlayer1;
-        addedToken.transform.position = pos;
-        addedTokens.Add(addedToken);
+        Game.Instance().ActivePlayer().Client.SpawnToken(pos, colorPlayer1);
     }
     public void addPlayer2Token(Vector2 pos)
     {
-        var addedToken = Instantiate(token);
-        addedToken.GetComponent<SpriteRenderer>().color = colorPlayer2;
-        addedToken.transform.position = pos;
-        addedTokens.Add(addedToken);
+        Game.Instance().ActivePlayer().Client.SpawnToken(pos, colorPlayer2);
     }
     public void addInactiveToken(Vector2 pos)
     {
@@ -66,11 +56,7 @@ public class BoardView : MonoBehaviour
     }
     public void ClearBoard()
     {
-        foreach( GameObject token in addedTokens )
-        {
-            Destroy(token);
-        }
-        addedTokens.Clear();
+        Game.Instance().ActivePlayer().Client.ClearTokens();
     }
     public Color ColorPlayer1()
     {

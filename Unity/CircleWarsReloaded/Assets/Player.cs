@@ -23,10 +23,6 @@ namespace Engine
             this.Client = playerClient;
         }
 
-        public bool AddToken(Field field)
-        {
-            return field.requestToken();
-        }
     }
 
 } //Namespace Engine

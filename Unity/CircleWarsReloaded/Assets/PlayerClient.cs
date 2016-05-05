@@ -2,6 +2,7 @@
 using UnityEngine.Networking;
 using System.Collections;
 using Engine;
+using System.Collections.Generic;
 
 public class PlayerClient : NetworkBehaviour
 {
@@ -12,7 +13,11 @@ public class PlayerClient : NetworkBehaviour
     [SyncVar(hook = "OnActivePlayerChangeIn")]
     Player.Id activePlayer;
 
+    [SerializeField]
+    private GameObject token;
+
     private Game game;
+    public List<GameObject> addedTokens;
     // The Player representation in Engine.
     private Player player;
     private bool hasBeenSynced;
@@ -22,11 +27,13 @@ public class PlayerClient : NetworkBehaviour
     {
         game = Game.Instance();
         player = game.CreatePlayer(this);
-        hasBeenSynced = false;
+        hasBeenSynced = true;
         // Connect to states
         Game.Instance().CurrentGameState.ConnectTo(OnGameStateChangeOut);
         Game.Instance().CurrentSecretPhaseState.ConnectTo(OnSecretPhaseChangeOut);
         Game.Instance().ActivePlayerId().ConnectTo(OnActivePlayerChangeOut);
+
+        CWLogging.Instance().LogDebug(player.id.ToString());
     }
     
     public void OnGameStateChangeIn(Game.GameState state)
@@ -39,11 +46,13 @@ public class PlayerClient : NetworkBehaviour
     public void OnSecretPhaseChangeIn(Game.SecretPhaseState state)
     {
         hasBeenSynced = true;
+        secretPhase = state;
         game.CurrentSecretPhaseState.Value = secretPhase;
     }
     public void OnActivePlayerChangeIn(Player.Id state)
     {
         hasBeenSynced = true;
+        activePlayer = state;
         game.ActivePlayerId().Value = activePlayer;
     }
     
@@ -60,10 +69,24 @@ public class PlayerClient : NetworkBehaviour
         CmdSyncActivePlayer(state);
     }
 
+    public bool AddToken(Field field)
+    {
+        return activePlayer == player.id ? field.requestToken() : false ;
+    }
+
+    public void SpawnToken(Vector2 position, Color color)
+    {
+        CmdSpawnToken(position, color);
+    }
+
+    public void ClearTokens()
+    {
+        CmdClearTokens();
+    }
+
     [Command]
     void CmdSyncGameState(Game.GameState state)
     {
-        CWLogging.Instance().LogDebug("Start snyced: GameState");
         if (hasBeenSynced)
         {
             hasBeenSynced = false;
@@ -94,5 +117,28 @@ public class PlayerClient : NetworkBehaviour
         }
         activePlayer = id;
 
+    }
+
+    [Command]
+    void CmdSpawnToken(Vector2 position, Color color)
+    { 
+
+        var addedToken = Instantiate(token);
+
+        // TODO: Spawn token on server side?
+        addedToken.GetComponent<SpriteRenderer>().color = color;
+        addedToken.transform.position = position;
+        addedTokens.Add(addedToken);
+        NetworkServer.Spawn(addedToken);
+    }
+
+    [Command]
+    void CmdClearTokens()
+    {
+        foreach (GameObject token in addedTokens)
+        {
+            Destroy(token);
+        }
+        addedTokens.Clear();
     }
 }
