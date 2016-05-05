@@ -76,9 +76,9 @@
     <Compile Include="Assets\Logging.cs" />
     <Compile Include="Assets\PhaseStatusTextView.cs" />
     <Compile Include="Assets\Player.cs" />
+    <Compile Include="Assets\PlayerClient.cs" />
     <Compile Include="Assets\PlayerList.cs" />
     <Compile Include="Assets\PlayerState.cs" />
-    <Compile Include="Assets\PlayerView.cs" />
     <Compile Include="Assets\Singleton.cs" />
     <Compile Include="Assets\StartButtonTextView.cs" />
     <Compile Include="Assets\StatusTextView.cs" />
