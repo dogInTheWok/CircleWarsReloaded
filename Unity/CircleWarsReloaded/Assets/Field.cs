@@ -37,10 +37,10 @@ namespace Engine
             switch (state)
             {
                 case Game.GameState.NotStarted:
-                    Reset();
+                    reset();
                     break;
                 case Game.GameState.EvaluatingFields:
-                    evalField();
+                    evaluate();
                     break;
                 default:
                     break;
@@ -111,7 +111,7 @@ namespace Engine
             tokenCount++;
             return true;
         }
-        private void evalField()
+        private void evaluate()
         {
             if( HasNapalm )
             {
