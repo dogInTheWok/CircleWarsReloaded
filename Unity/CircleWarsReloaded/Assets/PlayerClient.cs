@@ -73,7 +73,8 @@ public class PlayerClient : NetworkBehaviour
 
     public bool AddToken(Field field)
     {
-        if (activePlayer != player.id)
+        CWLogging.Instance().LogDebug("PlayerClient::AddToken: Active Player ID: " + activePlayer.ToString());
+        if (!game.ActivePlayer().Client.isLocalPlayer)
             return false;
 
         if( field.Draw() )
