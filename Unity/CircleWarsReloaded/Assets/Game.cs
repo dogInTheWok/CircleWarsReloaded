@@ -36,10 +36,10 @@ namespace Engine
         public CWState<GameState> CurrentGameState { get; private set; }
         public CWState<SecretPhaseState> CurrentSecretPhaseState { get; private set; }
         public Player.Id Winner { get; private set; }
+        public int DistribTurn{ get; set;}
 
         private PlayerList playerList;
         private FieldList fieldList;
-        private int distribTurn = 0;
         private int secretTurn = 0;
         
         public Game()
@@ -52,6 +52,7 @@ namespace Engine
             CurrentSecretPhaseState = new CWState<SecretPhaseState>();
             CurrentSecretPhaseState.Value = SecretPhaseState.NotEntered;
             CurrentGameState.ConnectTo(onGameStateChange);
+            DistribTurn = 0;
         }
 
         public Field CreateField()
@@ -83,7 +84,7 @@ namespace Engine
         }
         public void Reset()
         {
-            distribTurn = 0;
+            DistribTurn = 0;
             secretTurn = 0;
             CurrentGameState.Value = GameState.NotStarted;
         }
@@ -109,7 +110,7 @@ namespace Engine
                 nextSecret();
             }
 
-            if (distribTurn == NUM_TURNS_DISTRIB)
+            if (DistribTurn == NUM_TURNS_DISTRIB)
             {
                 enterSecretPhase();
             }
@@ -156,7 +157,9 @@ namespace Engine
         private void nextDistrib()
         {
             playerList.NextPlayer();
-            distribTurn++;
+            if (!ActivePlayer().Client.isLocalPlayer)
+                CWLogging.Instance().LogWarning("Active Player is NOT local!");
+            ActivePlayer().Client.UpdateDistribTurn(++DistribTurn);
         }
         private void nextSecret()
         {

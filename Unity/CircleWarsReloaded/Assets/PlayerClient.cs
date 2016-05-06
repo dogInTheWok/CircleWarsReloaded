@@ -12,6 +12,8 @@ public class PlayerClient : NetworkBehaviour
     Game.SecretPhaseState secretPhase;
     [SyncVar(hook = "OnActivePlayerChangeIn")]
     Player.Id activePlayer;
+    [SyncVar(hook = "OnDistribTurnChangeIn")]
+    private int distribTurn;
 
     [SerializeField]
     private GameObject token;
@@ -57,7 +59,14 @@ public class PlayerClient : NetworkBehaviour
         activePlayer = state;
         game.ActivePlayerId().Value = activePlayer;
     }
-    
+    public void OnDistribTurnChangeIn(int turn)
+    {
+        CWLogging.Instance().LogDebug("PlayerClient::OnDistribTurnChange: Synced Turn: " + turn);
+        hasBeenSynced = true;
+        distribTurn = turn;
+        game.DistribTurn = distribTurn;
+    }
+
     public void OnGameStateChangeOut(Game.GameState state)
     {
         CmdSyncGameState(state);
@@ -69,6 +78,10 @@ public class PlayerClient : NetworkBehaviour
     public void OnActivePlayerChangeOut(Player.Id state)
     {
         CmdSyncActivePlayer(state);
+    }
+    public void UpdateDistribTurn(int turn)
+    {
+        CmdUpdateDistribTurn(turn);
     }
 
     public bool AddToken(Field field)
@@ -151,5 +164,11 @@ public class PlayerClient : NetworkBehaviour
             Destroy(token);
         }
         addedTokens.Clear();
+    }
+
+    [Command]
+    void CmdUpdateDistribTurn(int turn)
+    {
+        distribTurn = turn;
     }
 }
