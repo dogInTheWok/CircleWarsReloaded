@@ -76,7 +76,7 @@ public class PlayerClient : NetworkBehaviour
         if (activePlayer != player.id)
             return false;
 
-        if( field.AddToken() )
+        if( field.Draw() )
         {
             Game.Instance().NextTurn();
             return true;

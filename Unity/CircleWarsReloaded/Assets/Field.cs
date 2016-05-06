@@ -51,21 +51,7 @@ namespace Engine
         {
             neighbours.Add(neighbour);
         }
-        public bool addToken()
-        {
-            if (Owner == Player.Id.ILLEGAL)
-            {
-                Owner = game.ActivePlayerId().Value;
-            } else if (Owner != game.ActivePlayerId().Value)
-            {
-                return false;
-            }
-
-            TokenCount = TokenCount + 1;
-            return true;
-        }
-
-        public bool AddToken()
+        public bool Draw()
         {
             if (game.CurrentGameState.Value == Game.GameState.RunningDistribution)
             {
@@ -78,25 +64,21 @@ namespace Engine
             return false;
         }
 
-        public bool addSecret(Game.SecretPhaseState secretValue)
+        private bool addSecret(Game.SecretPhaseState secretValue)
         {
-            switch (secretValue) {
+            switch (secretValue)
+            {
                 case Game.SecretPhaseState.Batillion:
                     if (Owner != game.ActivePlayerId().Value && Owner != Player.Id.ILLEGAL)
-                    {
                         return false;
-                    }
-
+     
                     addToken();
                     HasMarine = true;
                     break;
 
                 case Game.SecretPhaseState.Marine:
-
                     if (Owner != game.ActivePlayerId().Value && Owner != Player.Id.ILLEGAL)
-                    {
                         return false;
-                    }
 
                     addToken();
                     addToken();
@@ -106,20 +88,32 @@ namespace Engine
 
                 case Game.SecretPhaseState.Napalm:
                     if (Owner == game.ActivePlayerId().Value)
-                    {
                         return false;
-                    }
 
                     HasNapalm = true;
                     break;
+                default:
+                    return false;
             }
 
             return true;
         }
-
-        public void evalField()
+        private bool addToken()
         {
-            /* determine if field has isWon combat for its owner */
+            if (Owner == Player.Id.ILLEGAL)
+            {
+                Owner = game.ActivePlayerId().Value;
+            } else if (Owner != game.ActivePlayerId().Value)
+            {
+                return false;
+            }
+
+            TokenCount++;
+            return true;
+        }
+        private void evalField()
+        {
+            // Determine if field has isWon combat for its owner
 
             int evalTokenCount = TokenCount;
 
@@ -136,8 +130,7 @@ namespace Engine
             }
             IsWon = evalTokenCount > 0;
         }
-
-        public void Reset()
+        private void reset()
         {
             Owner = Player.Id.ILLEGAL;
             TokenCount = 0;
