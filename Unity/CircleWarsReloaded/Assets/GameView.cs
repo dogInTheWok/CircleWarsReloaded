@@ -6,10 +6,15 @@ public class GameView : MonoBehaviour
 {
     public Game Game { get; private set; }
 
+    void Awake()
+    {
+        Game = Game.Instance();
+    }
+
     // Use this for initialization
     void Start()
     {
-        Game = Game.Instance();
+        
     }
 
     // Update is called once per frame
