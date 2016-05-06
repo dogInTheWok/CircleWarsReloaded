@@ -55,11 +55,11 @@ public class FieldView : MonoBehaviour
     {
         if (Field.Owner == Player.Id.PLAYER1)
         {
-            boardView.addPlayer1Token(tokenPoint);
+            boardView.AddPlayer1Token(tokenPoint);
         }
         else if (Field.Owner == Player.Id.PLAYER2)
         {
-            boardView.addPlayer2Token(tokenPoint);
+            boardView.AddPlayer2Token(tokenPoint);
         }
         tokenPoint += NextTokenPositionIncrement;
     }
@@ -71,7 +71,7 @@ public class FieldView : MonoBehaviour
     }
     public void AddVisualInactiveMarker()
     {
-        boardView.addInactiveToken(identPoint);
+        boardView.AddInactiveToken(identPoint);
     }
     public void AddVisualEvaluationResult()
     {

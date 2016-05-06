@@ -17,17 +17,10 @@ public class BoardView : MonoBehaviour
 
     private List<GameObject> addedTokens;
 
-    // Use this for initialization
-    void Start()
+    void Awake()
     {
         addedTokens = new List<GameObject>();
         Game.Instance().CurrentGameState.ConnectTo(OnStateChange);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     // Connection to GameState
@@ -39,25 +32,7 @@ public class BoardView : MonoBehaviour
             ClearBoard();
         }
     }
-    public void addPlayer1Token(Vector2 pos)
-    {
-        Game.Instance().ActivePlayer().Client.SpawnToken(pos, colorPlayer1);
-    }
-    public void addPlayer2Token(Vector2 pos)
-    {
-        Game.Instance().ActivePlayer().Client.SpawnToken(pos, colorPlayer2);
-    }
-    public void addInactiveToken(Vector2 pos)
-    {
-        var addedToken = Instantiate(inactiveMarker);
-        addedToken.GetComponent<SpriteRenderer>().color = colorInactive;
-        addedToken.transform.position = pos;
-        addedTokens.Add(addedToken);
-    }
-    public void ClearBoard()
-    {
-        Game.Instance().ActivePlayer().Client.ClearTokens();
-    }
+
     public Color ColorPlayer1()
     {
         return colorPlayer1;
@@ -70,4 +45,26 @@ public class BoardView : MonoBehaviour
     {
         return colorInactive;
     }
+
+    public void AddPlayer1Token(Vector2 pos)
+    {
+        Game.Instance().ActivePlayer().Client.SpawnToken(pos, colorPlayer1);
+    }
+    public void AddPlayer2Token(Vector2 pos)
+    {
+        Game.Instance().ActivePlayer().Client.SpawnToken(pos, colorPlayer2);
+    }
+    public void AddInactiveToken(Vector2 pos)
+    {
+        //TODO: Move to some NetworkBehavior
+        var addedToken = Instantiate(inactiveMarker);
+        addedToken.GetComponent<SpriteRenderer>().color = colorInactive;
+        addedToken.transform.position = pos;
+        addedTokens.Add(addedToken);
+    }
+    public void ClearBoard()
+    {
+        Game.Instance().Clear();
+    }
+
 }

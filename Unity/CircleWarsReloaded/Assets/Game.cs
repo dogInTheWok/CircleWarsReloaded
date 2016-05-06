@@ -77,6 +77,15 @@ namespace Engine
             CurrentGameState.Value = GameState.RunningDistribution;
         }
 
+        public void Clear()
+        {
+            foreach( Player p in playerList.Players )
+            {
+                if (null == p)
+                    continue;
+                p.Client.ClearTokens();
+            }
+        }
         public void Reset()
         {
             distribTurn = 0;

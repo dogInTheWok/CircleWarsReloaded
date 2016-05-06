@@ -10,15 +10,15 @@ namespace Engine
     {
         public Player ActivePlayer { get; private set; }
         public int CurrentNumberOfPlayers { get; private set; }
+        public Player[] Players { get; private set; }
         private int maxPlayer;
-        private Player[] players;
         public CWState<Player.Id> ActivePlayerId { get; private set; }
 
         public PlayerList(int numPlayer)
         {
             CurrentNumberOfPlayers = 0;
             this.maxPlayer = numPlayer;
-            players = new Player[numPlayer];
+            Players = new Player[numPlayer];
             ActivePlayerId = new CWState<Player.Id>();
             ActivePlayerId.Value = Player.Id.ILLEGAL;
             ActivePlayerId.ConnectTo(OnActivePlayerIdChanged);
@@ -28,9 +28,9 @@ namespace Engine
         {
             if (CurrentNumberOfPlayers >= maxPlayer)
                 return null;
-            players[CurrentNumberOfPlayers] = new Player((Player.Id)CurrentNumberOfPlayers + 1, playerClient); ;
+            Players[CurrentNumberOfPlayers] = new Player((Player.Id)CurrentNumberOfPlayers + 1, playerClient); ;
 
-            return players[CurrentNumberOfPlayers++];
+            return Players[CurrentNumberOfPlayers++];
         }
         void OnActivePlayerIdChanged(Player.Id id)
         {
@@ -40,25 +40,25 @@ namespace Engine
                 ActivePlayer = null;
                 return;
             }
-            ActivePlayer = players[index];
+            ActivePlayer = Players[index];
         }
         public bool StartGame()
         {
             if (CurrentNumberOfPlayers < 2)
                 return false;
 
-            foreach (Player p in players)
+            foreach (Player p in Players)
             {
                 p.isActive = false;
             }
 
             ActivePlayerId.Value = Player.Id.PLAYER1;
-            players[0].isActive = true;
+            Players[0].isActive = true;
             return true;
         }
         public void NextPlayer()
         {
-            foreach( Player player in players )
+            foreach( Player player in Players )
             {
                 player.isActive = !player.isActive;
                 if (!player.isActive)
