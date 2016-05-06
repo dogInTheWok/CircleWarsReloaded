@@ -10,19 +10,6 @@ public class GameView : MonoBehaviour
     {
         Game = Game.Instance();
     }
-
-    // Use this for initialization
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void OnClickStartButton()
     {
         if( Game.CurrentGameState.Value == Game.GameState.NotStarted )

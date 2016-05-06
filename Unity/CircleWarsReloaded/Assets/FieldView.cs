@@ -11,10 +11,10 @@ public class FieldView : MonoBehaviour
     private FieldView[] neighbours;
     [SerializeField]
     private Vector2 identPoint;
-    private Vector2 tokenPoint;
-    private Vector2 fieldPosition;
 
-    private static Vector2 MOVE_NEXT_TOKEN = new Vector2(15, 5);
+    private Vector2 tokenPoint;
+
+    private Vector2 NextTokenPositionIncrement = new Vector2(15, 5);
 
     public Field Field { get; private set; }
 
@@ -31,7 +31,7 @@ public class FieldView : MonoBehaviour
         if (!activePlayer.Client.AddToken(Field))
             return;
 
-        addVisualToken();
+        AddVisualToken();
     }
 
     // Implement Slot for GameState
@@ -40,16 +40,18 @@ public class FieldView : MonoBehaviour
         switch (state)
         {
             case Game.GameState.Evaluating:
-                AddNeighbours();
-                AddEvalVisuals();
+                addNeighbours();
+                AddVisualEvaluationResult();
                 break;
             case Game.GameState.NotStarted:
-                ResetVisuals();
+                resetVisuals();
+                break;
+            default:
                 break;
         }
     }
 
-    public void addVisualToken()
+    public void AddVisualToken()
     {
         if (Field.Owner == Player.Id.PLAYER1)
         {
@@ -59,46 +61,42 @@ public class FieldView : MonoBehaviour
         {
             boardView.addPlayer2Token(tokenPoint);
         }
-        tokenPoint += MOVE_NEXT_TOKEN;
+        tokenPoint += NextTokenPositionIncrement;
     }
-
-    public void AddThreeVisualTokens()
+    public void AddVisualThreeTokens()
     {
-        addVisualToken();
-        addVisualToken();
-        addVisualToken();
+        AddVisualToken();
+        AddVisualToken();
+        AddVisualToken();
     }
-
-    public void AddBlackToken()
+    public void AddVisualInactiveMarker()
     {
         boardView.addInactiveToken(identPoint);
     }
+    public void AddVisualEvaluationResult()
+    {
+        if (Field.HasBatillion)
+        {
+            AddVisualThreeTokens();
+        }
+        else if (Field.HasMarine)
+        {
+            AddVisualToken();
+        }
 
-    public void AddNeighbours()
+        if (!Field.IsActive)
+            AddVisualInactiveMarker();
+
+    }
+
+    private void addNeighbours()
     {
         foreach (FieldView view in neighbours)
         {
             Field.addNeighbour(view.Field);
         }
     }
-
-    public void AddEvalVisuals()
-    {
-        if (Field.HasBatillion)
-        {
-            AddThreeVisualTokens();
-        }
-        else if (Field.HasMarine)
-        {
-            addVisualToken();
-        }
-
-        if (!Field.IsActive)
-            AddBlackToken();
-
-    }
-
-    public void ResetVisuals()
+    private void resetVisuals()
     {
         tokenPoint = identPoint;
     }
