@@ -38,19 +38,21 @@ public class PlayerClient : NetworkBehaviour
     
     public void OnGameStateChangeIn(Game.GameState state)
     {
-        CWLogging.Instance().LogDebug("Syned State:" + gameState + state);
+        CWLogging.Instance().LogDebug("Synced GameState:" + state);
         hasBeenSynced = true;
         gameState = state;
         game.CurrentGameState.Value = gameState;
     }
     public void OnSecretPhaseChangeIn(Game.SecretPhaseState state)
     {
+        CWLogging.Instance().LogDebug("Synced SecretPhaseState:" + state);
         hasBeenSynced = true;
         secretPhase = state;
         game.CurrentSecretPhaseState.Value = secretPhase;
     }
     public void OnActivePlayerChangeIn(Player.Id state)
     {
+        CWLogging.Instance().LogDebug("Synced Player:" + state);
         hasBeenSynced = true;
         activePlayer = state;
         game.ActivePlayerId().Value = activePlayer;
@@ -116,7 +118,6 @@ public class PlayerClient : NetworkBehaviour
             return;
         }
         activePlayer = id;
-
     }
 
     [Command]

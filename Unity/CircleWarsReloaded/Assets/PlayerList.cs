@@ -8,12 +8,10 @@ namespace Engine
 {
     public class PlayerList
     {
-        
         public Player ActivePlayer { get; private set; }
         public int CurrentNumberOfPlayers { get; private set; }
         private int maxPlayer;
         private Player[] players;
-        private CWState<Player.Id> activePlayerId;
         public CWState<Player.Id> ActivePlayerId { get; private set; }
 
         public PlayerList(int numPlayer)
@@ -43,7 +41,6 @@ namespace Engine
                 return;
             }
             ActivePlayer = players[index];
-
         }
         public bool StartGame()
         {
@@ -59,7 +56,6 @@ namespace Engine
             players[0].isActive = true;
             return true;
         }
-
         public void NextPlayer()
         {
             foreach( Player player in players )
@@ -69,7 +65,8 @@ namespace Engine
                     continue;
                 ActivePlayerId.Value = player.id;
             }
-            CWLogging.Instance().LogDebug(ActivePlayerId.Value.ToString());
+
+            CWLogging.Instance().LogDebug("Currently active player: " + ActivePlayerId.Value.ToString());
         }
     }
 } //Namespace Engine
