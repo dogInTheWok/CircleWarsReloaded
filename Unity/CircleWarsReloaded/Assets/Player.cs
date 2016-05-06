@@ -11,13 +11,12 @@ namespace Engine
             PLAYER1,
             PLAYER2
         }
-        public Id id { get; private set; }
-        public bool isActive { get; set; }
+        public Id PlayerId { get; private set; }
         public PlayerClient Client { get; private set; }
 
         public Player(Id id, PlayerClient playerClient)
         {
-            this.id = id;
+            PlayerId = id;
             Client = playerClient;
         }
 

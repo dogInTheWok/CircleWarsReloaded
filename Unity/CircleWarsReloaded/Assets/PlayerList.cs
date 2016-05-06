@@ -36,26 +36,8 @@ namespace Engine
             if (currentNumberOfPlayers < Players.Length)
                 return false;
 
-            foreach (Player p in Players)
-            {
-                p.isActive = false;
-            }
-
             ActivePlayerId.Value = Player.Id.PLAYER1;
-            Players[0].isActive = true;
             return true;
-        }
-        public void NextPlayer()
-        {
-            foreach( Player player in Players )
-            {
-                player.isActive = !player.isActive;
-                if (!player.isActive)
-                    continue;
-                ActivePlayerId.Value = player.id;
-            }
-
-            CWLogging.Instance().LogDebug("Currently active player: " + ActivePlayerId.Value.ToString());
         }
 
         private void onActivePlayerIdChanged(Player.Id id)

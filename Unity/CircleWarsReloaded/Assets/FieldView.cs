@@ -23,6 +23,7 @@ public class FieldView : MonoBehaviour
         Field = Game.Instance().CreateField();
         Game.Instance().CurrentGameState.ConnectTo(OnStateChange);
         tokenPoint = identPoint;
+        addNeighbours();
     }
 
     public void OnMouseDown()
@@ -32,6 +33,8 @@ public class FieldView : MonoBehaviour
             return;
 
         AddVisualToken();
+        Game.Instance().ActivePlayerId().Value = Player.Id.PLAYER1 == activePlayer.PlayerId ? Player.Id.PLAYER2 : Player.Id.PLAYER1;
+
     }
 
     // Implement Slot for GameState
@@ -39,8 +42,7 @@ public class FieldView : MonoBehaviour
     {
         switch (state)
         {
-            case Game.GameState.Evaluating:
-                addNeighbours();
+            case Game.GameState.EvaluatingFields:
                 AddVisualEvaluationResult();
                 break;
             case Game.GameState.NotStarted:
@@ -84,7 +86,7 @@ public class FieldView : MonoBehaviour
             AddVisualToken();
         }
 
-        if (!Field.IsActive)
+        if (Field.HasNapalm)
             AddVisualInactiveMarker();
 
     }

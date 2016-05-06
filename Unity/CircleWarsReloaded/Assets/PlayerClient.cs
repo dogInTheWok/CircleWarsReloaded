@@ -31,11 +31,12 @@ public class PlayerClient : NetworkBehaviour
         game = Game.Instance();
         player = game.CreatePlayer(this);
         // Connect to states
-        Game.Instance().CurrentGameState.ConnectTo(OnGameStateChangeOut);
-        Game.Instance().CurrentSecretPhaseState.ConnectTo(OnSecretPhaseChangeOut);
-        Game.Instance().ActivePlayerId().ConnectTo(OnActivePlayerChangeOut);
-
-        CWLogging.Instance().LogDebug("PlayerClient started: " + player.id.ToString());
+        
+            Game.Instance().CurrentGameState.ConnectTo(OnGameStateChangeOut);
+            Game.Instance().CurrentSecretPhaseState.ConnectTo(OnSecretPhaseChangeOut);
+            Game.Instance().ActivePlayerId().ConnectTo(OnActivePlayerChangeOut);
+     
+        CWLogging.Instance().LogDebug("PlayerClient started: " + player.PlayerId.ToString());
     }
     
     public void OnGameStateChangeIn(Game.GameState state)
@@ -57,7 +58,7 @@ public class PlayerClient : NetworkBehaviour
         CWLogging.Instance().LogDebug("Synced Player:" + state);
         hasBeenSynced = true;
         activePlayer = state;
-        game.ActivePlayerId().Value = activePlayer;
+        game.ActivePlayerId().Value = state;
     }
     public void OnDistribTurnChangeIn(int turn)
     {
@@ -69,18 +70,38 @@ public class PlayerClient : NetworkBehaviour
 
     public void OnGameStateChangeOut(Game.GameState state)
     {
+        if (hasBeenSynced)
+        {
+            hasBeenSynced = false;
+            return;
+        }
         CmdSyncGameState(state);
     }
     public void OnSecretPhaseChangeOut(Game.SecretPhaseState state)
     {
+        if (hasBeenSynced)
+        {
+            hasBeenSynced = false;
+            return;
+        }
         CmdSyncSecretState(state);
     }
     public void OnActivePlayerChangeOut(Player.Id state)
     {
+        if (hasBeenSynced)
+        {
+            hasBeenSynced = false;
+            return;
+        }
         CmdSyncActivePlayer(state);
     }
     public void UpdateDistribTurn(int turn)
     {
+        if (hasBeenSynced)
+        {
+            hasBeenSynced = false;
+            return;
+        }
         CmdUpdateDistribTurn(turn);
     }
 
@@ -106,41 +127,27 @@ public class PlayerClient : NetworkBehaviour
 
     public void ClearTokens()
     {
-        CmdClearTokens();
+        if (isLocalPlayer)
+            CmdClearTokens();
     }
 
     [Command]
     void CmdSyncGameState(Game.GameState state)
     {
-        if (hasBeenSynced)
-        {
-            hasBeenSynced = false;
-            return;
-        }
         gameState = state;
     }
 
     [Command]
     void CmdSyncSecretState(Game.SecretPhaseState state)
     {
-
-        if (hasBeenSynced)
-        {
-            hasBeenSynced = false;
-            return;
-        }
         secretPhase = state;
     }
 
     [Command]
     void CmdSyncActivePlayer(Player.Id id)
     {
-        if (hasBeenSynced)
-        {
-            hasBeenSynced = false;
-            return;
-        }
         activePlayer = id;
+        game.ActivePlayerId().Value = id;
     }
 
     [Command]

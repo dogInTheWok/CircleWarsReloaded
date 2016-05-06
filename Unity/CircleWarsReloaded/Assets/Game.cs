@@ -156,7 +156,6 @@ namespace Engine
         }
         private void nextDistrib()
         {
-            playerList.NextPlayer();
             if (!ActivePlayer().Client.isLocalPlayer)
                 CWLogging.Instance().LogWarning("Active Player is NOT local!");
             ActivePlayer().Client.UpdateDistribTurn(++DistribTurn);
@@ -173,7 +172,7 @@ namespace Engine
                     CurrentSecretPhaseState.Value = SecretPhaseState.Napalm;
                     break;
                 case SecretPhaseState.Napalm:
-                    playerList.NextPlayer();
+                    ActivePlayerId().Value = Player.Id.PLAYER1 == ActivePlayerId().Value ? Player.Id.PLAYER2 : Player.Id.PLAYER1;
                     CurrentSecretPhaseState.Value = SecretPhaseState.Batillion;
                     break;
                 default:
