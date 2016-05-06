@@ -9,42 +9,31 @@ namespace Engine
     public class PlayerList
     {
         public Player ActivePlayer { get; private set; }
-        public int CurrentNumberOfPlayers { get; private set; }
-        public Player[] Players { get; private set; }
-        private int maxPlayer;
         public CWState<Player.Id> ActivePlayerId { get; private set; }
+        public Player[] Players { get; private set; }
+
+        private int currentNumberOfPlayers = 0;
 
         public PlayerList(int numPlayer)
         {
-            CurrentNumberOfPlayers = 0;
-            this.maxPlayer = numPlayer;
             Players = new Player[numPlayer];
             ActivePlayerId = new CWState<Player.Id>();
             ActivePlayerId.Value = Player.Id.ILLEGAL;
-            ActivePlayerId.ConnectTo(OnActivePlayerIdChanged);
+            ActivePlayerId.ConnectTo(onActivePlayerIdChanged);
         }
 
         public Player CreatePlayer( PlayerClient playerClient)
         {
-            if (CurrentNumberOfPlayers >= maxPlayer)
+            if (currentNumberOfPlayers >= Players.Length)
                 return null;
-            Players[CurrentNumberOfPlayers] = new Player((Player.Id)CurrentNumberOfPlayers + 1, playerClient); ;
+            Players[currentNumberOfPlayers] = new Player((Player.Id)currentNumberOfPlayers + 1, playerClient); ;
 
-            return Players[CurrentNumberOfPlayers++];
+            return Players[currentNumberOfPlayers++];
         }
-        void OnActivePlayerIdChanged(Player.Id id)
-        {
-            var index = (int)id - 1;
-            if (index < 0 || index >= CurrentNumberOfPlayers)
-            {
-                ActivePlayer = null;
-                return;
-            }
-            ActivePlayer = Players[index];
-        }
+        
         public bool Start()
         {
-            if (CurrentNumberOfPlayers < 2)
+            if (currentNumberOfPlayers < Players.Length)
                 return false;
 
             foreach (Player p in Players)
@@ -67,6 +56,17 @@ namespace Engine
             }
 
             CWLogging.Instance().LogDebug("Currently active player: " + ActivePlayerId.Value.ToString());
+        }
+
+        private void onActivePlayerIdChanged(Player.Id id)
+        {
+            var index = (int)id - 1;
+            if (index < 0 || index >= currentNumberOfPlayers)
+            {
+                ActivePlayer = null;
+                return;
+            }
+            ActivePlayer = Players[index];
         }
     }
 } //Namespace Engine

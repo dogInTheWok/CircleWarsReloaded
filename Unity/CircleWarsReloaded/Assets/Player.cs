@@ -5,22 +5,20 @@ namespace Engine
 {
     public class Player
     {
-        public Player.Id id { get; private set; }
-        public bool isActive { get; set; }
-        public PlayerClient Client { get; private set; }
-
         public enum Id
         {
             ILLEGAL,
             PLAYER1,
             PLAYER2
         }
+        public Id id { get; private set; }
+        public bool isActive { get; set; }
+        public PlayerClient Client { get; private set; }
 
-
-        public Player(Player.Id id, PlayerClient playerClient)
+        public Player(Id id, PlayerClient playerClient)
         {
             this.id = id;
-            this.Client = playerClient;
+            Client = playerClient;
         }
 
     }

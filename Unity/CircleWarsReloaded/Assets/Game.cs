@@ -51,7 +51,7 @@ namespace Engine
             CurrentGameState.Value = GameState.NotStarted;
             CurrentSecretPhaseState = new CWState<SecretPhaseState>();
             CurrentSecretPhaseState.Value = SecretPhaseState.NotEntered;
-            CurrentGameState.ConnectTo(OnGameStateChange);
+            CurrentGameState.ConnectTo(onGameStateChange);
         }
 
         public Field CreateField()
@@ -87,20 +87,7 @@ namespace Engine
             secretTurn = 0;
             CurrentGameState.Value = GameState.NotStarted;
         }
-        public void OnGameStateChange(Game.GameState state)
-        {
-            if (GameState.EvaluatingTotal != state)
-                return;
-
-            if (fieldList.Score(Player.Id.PLAYER1) == fieldList.Score(Player.Id.PLAYER2))
-            {
-                Winner = Player.Id.ILLEGAL;
-            }
-            else
-            {
-                Winner = fieldList.Score(Player.Id.PLAYER1) > fieldList.Score(Player.Id.PLAYER2) ? Player.Id.PLAYER1 : Player.Id.PLAYER2;
-            }
-        }
+        
 
         public CWState<Player.Id> ActivePlayerId()
         {
@@ -132,7 +119,20 @@ namespace Engine
                 enterEval();
             }
         }
+        private void onGameStateChange(Game.GameState state)
+        {
+            if (GameState.EvaluatingTotal != state)
+                return;
 
+            if (fieldList.Score(Player.Id.PLAYER1) == fieldList.Score(Player.Id.PLAYER2))
+            {
+                Winner = Player.Id.ILLEGAL;
+            }
+            else
+            {
+                Winner = fieldList.Score(Player.Id.PLAYER1) > fieldList.Score(Player.Id.PLAYER2) ? Player.Id.PLAYER1 : Player.Id.PLAYER2;
+            }
+        }
         private void enterEval()
         {
             // Triggers evaluation of every single field.
