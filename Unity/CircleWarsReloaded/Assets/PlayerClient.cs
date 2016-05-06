@@ -18,16 +18,16 @@ public class PlayerClient : NetworkBehaviour
 
     private Game game;
     public List<GameObject> addedTokens;
+
     // The Player representation in Engine.
     private Player player;
-    private bool hasBeenSynced;
+    private bool hasBeenSynced = false;
 
     // Use this for initialization
     void Start()
     {
         game = Game.Instance();
         player = game.CreatePlayer(this);
-        hasBeenSynced = false;
         // Connect to states
         Game.Instance().CurrentGameState.ConnectTo(OnGameStateChangeOut);
         Game.Instance().CurrentSecretPhaseState.ConnectTo(OnSecretPhaseChangeOut);
