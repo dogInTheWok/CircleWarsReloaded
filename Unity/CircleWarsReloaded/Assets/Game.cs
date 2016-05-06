@@ -45,7 +45,7 @@ namespace Engine
 
         public Field CreateField()
         {
-            return fieldList.createField();
+            return fieldList.CreateField();
         }
 
         public Player CreatePlayer(PlayerClient playerClient)
@@ -98,11 +98,6 @@ namespace Engine
         {
             distribTurn = 0;
             secretTurn = 0;
-        }
-
-        public int NumFields()
-        {
-            return fieldList.size();
         }
 
         public CWState<Player.Id> ActivePlayerId()

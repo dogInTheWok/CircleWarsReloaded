@@ -18,7 +18,7 @@ namespace Engine
 
         private Game game;
         private List<Field> neighbours = new List<Field>();
-        private int TokenCount = 0;
+        private int tokenCount = 0;
 
         public Field()
         {
@@ -108,24 +108,28 @@ namespace Engine
                 return false;
             }
 
-            TokenCount++;
+            tokenCount++;
             return true;
         }
         private void evalField()
         {
+            if( HasNapalm )
+            {
+                IsWon = false;
+                return;
+            }
+
             // Determine if field has isWon combat for its owner
-
-            int evalTokenCount = TokenCount;
-
+            int evalTokenCount = tokenCount;
             foreach (Field f in neighbours)
             {
                 if (f.Owner == Owner && !f.HasNapalm)
                 {
-                    evalTokenCount = evalTokenCount + f.TokenCount;
+                    evalTokenCount = evalTokenCount + f.tokenCount;
                 }
                 else if (f.Owner != Player.Id.ILLEGAL && !f.HasNapalm)
                 {
-                    evalTokenCount = evalTokenCount - f.TokenCount;
+                    evalTokenCount = evalTokenCount - f.tokenCount;
                 }
             }
             IsWon = evalTokenCount > 0;
@@ -133,7 +137,7 @@ namespace Engine
         private void reset()
         {
             Owner = Player.Id.ILLEGAL;
-            TokenCount = 0;
+            tokenCount = 0;
             IsWon = false;
             HasBatillion = false;
             HasMarine = false;

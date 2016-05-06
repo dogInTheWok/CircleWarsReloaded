@@ -4,19 +4,17 @@
 
 namespace Engine
 {
-
     public class FieldList
     {
         private Field[] fields;
-        private int currentNumberOfFields;
+        private int currentNumberOfFields = 0;
 
         public FieldList(int num_fields)
         {
-            fields = new Field[Game.NUM_FIELDS];
-            currentNumberOfFields = 0;
+            fields = new Field[num_fields];
         }
 
-        public Field createField()
+        public Field CreateField()
         {
             if (currentNumberOfFields >= Game.NUM_FIELDS)
                 return null;
@@ -24,24 +22,12 @@ namespace Engine
             fields[currentNumberOfFields] = new Field();
             return fields[currentNumberOfFields++];
         }
-
-        public int size()
-        {
-            return fields.Length;
-        }
-
-        public Field get(int id)
-        {
-            return fields[id];
-        }
-
         public int Score(Player.Id playerId)
         {
             int score = 0;
-
             foreach (Field f in fields)
             {
-                if (f.IsActive && f.IsWon && f.Owner == playerId)
+                if (f.IsWon && f.Owner == playerId)
                     score++;
             }
 
