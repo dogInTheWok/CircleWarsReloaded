@@ -27,7 +27,7 @@ public class PlayerClient : NetworkBehaviour
     {
         game = Game.Instance();
         player = game.CreatePlayer(this);
-        hasBeenSynced = true;
+        hasBeenSynced = false;
         // Connect to states
         Game.Instance().CurrentGameState.ConnectTo(OnGameStateChangeOut);
         Game.Instance().CurrentSecretPhaseState.ConnectTo(OnSecretPhaseChangeOut);
