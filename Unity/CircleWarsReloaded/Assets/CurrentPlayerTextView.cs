@@ -17,12 +17,6 @@ public class CurrentPlayerTextView : MonoBehaviour
         Game.Instance().ActivePlayerId().ConnectTo(OnPlayerChanged);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     void OnPlayerChanged(Player.Id activePlayer )
     {
         switch( activePlayer )

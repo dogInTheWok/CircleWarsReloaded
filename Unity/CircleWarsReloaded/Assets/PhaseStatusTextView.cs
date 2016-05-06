@@ -5,6 +5,7 @@ using Engine;
 public class PhaseStatusTextView : MonoBehaviour
 {
     private Text text;
+
     // Use this for initialization
     void Start()
     {
@@ -12,12 +13,6 @@ public class PhaseStatusTextView : MonoBehaviour
         var game = Game.Instance();
         game.CurrentGameState.ConnectTo(OnGameStateChanged);
         game.CurrentSecretPhaseState.ConnectTo(OnPhaseChanged);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     void OnGameStateChanged(Game.GameState state)
@@ -32,6 +27,9 @@ public class PhaseStatusTextView : MonoBehaviour
                 break;
             case Game.GameState.RunningSecret:
                 OnPhaseChanged(Game.Instance().CurrentSecretPhaseState.Value);
+                break;
+            case Game.GameState.Terminated:
+                text.text = "Game ended";
                 break;
             default:
                 text.text = "No Status found";
