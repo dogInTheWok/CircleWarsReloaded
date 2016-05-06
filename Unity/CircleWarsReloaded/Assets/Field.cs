@@ -10,31 +10,25 @@ namespace Engine
 
     public class Field
     {
-        public bool IsActive { get; set; }
         public Player.Id Owner { get; set; }
-        public int FieldId { get; set; }
-
         public bool IsWon { get; private set; }
-        public int TokenCount { get; private set; }
-
         public bool HasBatillion { get; private set; }
         public bool HasMarine { get; private set; }
         public bool HasNapalm { get; private set; }
-        private List<Field> neighbours;
-        private Game game;
 
-        public Field(int id)
+        private Game game;
+        private List<Field> neighbours = new List<Field>();
+        private int TokenCount = 0;
+
+        public Field()
         {
             Owner = Player.Id.ILLEGAL;
-            FieldId = id;
-            TokenCount = 0;
-            IsActive = true;
             IsWon = false;
-            neighbours = new List<Field>();
-            game = Game.Instance();
             HasBatillion = false;
             HasMarine = false;
             HasNapalm = false;
+
+            game = Game.Instance();
             game.CurrentGameState.ConnectTo(OnStateChange);
         }
             
@@ -45,14 +39,18 @@ namespace Engine
                 case Game.GameState.NotStarted:
                     Reset();
                     break;
+                case Game.GameState.EvaluatingFields:
+                    evalField();
+                    break;
+                default:
+                    break;
             }
         }
 
-        public void addNeighbour( Field neighbour )
+        public void AddNeighbour( Field neighbour )
         {
             neighbours.Add(neighbour);
         }
-
         public bool addToken()
         {
             if (Owner == Player.Id.ILLEGAL)
@@ -67,9 +65,17 @@ namespace Engine
             return true;
         }
 
-        public bool requestToken()
+        public bool AddToken()
         {
-            return Game.Instance().DispatchForce(this);
+            if (game.CurrentGameState.Value == Game.GameState.RunningDistribution)
+            {
+                return addToken();
+            }
+            else if (game.CurrentGameState.Value == Game.GameState.RunningSecret)
+            {
+                return addSecret(game.CurrentSecretPhaseState.Value);
+            }
+            return false;
         }
 
         public bool addSecret(Game.SecretPhaseState secretValue)
@@ -104,7 +110,6 @@ namespace Engine
                         return false;
                     }
 
-                    IsActive = false;
                     HasNapalm = true;
                     break;
             }
@@ -120,11 +125,11 @@ namespace Engine
 
             foreach (Field f in neighbours)
             {
-                if (f.Owner == Owner && f.IsActive)
+                if (f.Owner == Owner && !f.HasNapalm)
                 {
                     evalTokenCount = evalTokenCount + f.TokenCount;
                 }
-                else if (f.Owner != Player.Id.ILLEGAL && f.IsActive)
+                else if (f.Owner != Player.Id.ILLEGAL && !f.HasNapalm)
                 {
                     evalTokenCount = evalTokenCount - f.TokenCount;
                 }
@@ -136,7 +141,6 @@ namespace Engine
         {
             Owner = Player.Id.ILLEGAL;
             TokenCount = 0;
-            IsActive = true;
             IsWon = false;
             HasBatillion = false;
             HasMarine = false;

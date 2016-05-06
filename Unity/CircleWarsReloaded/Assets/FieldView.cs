@@ -93,7 +93,7 @@ public class FieldView : MonoBehaviour
     {
         foreach (FieldView view in neighbours)
         {
-            Field.addNeighbour(view.Field);
+            Field.AddNeighbour(view.Field);
         }
     }
     private void resetVisuals()

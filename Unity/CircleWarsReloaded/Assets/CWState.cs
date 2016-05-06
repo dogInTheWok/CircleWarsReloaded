@@ -7,29 +7,18 @@ namespace Engine
 {
     public class CWState<T> where T : IComparable
     {
-        public delegate void Slot1(T state);
         public delegate void Slot0();
-
+        public delegate void Slot1(T state);
+        
         private T value;
-        private List<Slot1> slot1s;
         private List<Slot0> slot0s;
-
+        private List<Slot1> slot1s;
+        
         public CWState()
         {
             slot1s = new List<Slot1>();
             slot0s = new List<Slot0>();
         }
-
-        public void ConnectTo(Slot1 slot)
-        {
-            slot1s.Add(slot);
-        }
-
-        public void ConnectTo(Slot0 slot)
-        {
-            slot0s.Add(slot);
-        }
-
         public T Value
         {
             get { return value; }
@@ -38,7 +27,7 @@ namespace Engine
                 if (value.CompareTo(this.value) == 0)
                     return;
                 this.value = value;
-                foreach( Slot1 slot in slot1s )
+                foreach (Slot1 slot in slot1s)
                 {
                     slot(value);
                 }
@@ -48,5 +37,16 @@ namespace Engine
                 }
             }
         }
+
+        public void ConnectTo(Slot0 slot)
+        {
+            slot0s.Add(slot);
+        }
+        public void ConnectTo(Slot1 slot)
+        {
+            slot1s.Add(slot);
+        }
+        
+        
     }
 }

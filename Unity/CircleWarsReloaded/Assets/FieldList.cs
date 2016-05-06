@@ -2,43 +2,37 @@
  * Created by MW on 03.10.2014.
  */
 
-namespace Engine {
+namespace Engine
+{
 
-public class FieldList {
-	private Field[] fields;
-    private int currentNumberOfFields;
-
-	public FieldList(int num_fields) {
-		fields = new Field[Game.NUM_FIELDS];
-        currentNumberOfFields = 0;
-	}
-
-    public Field createField()
+    public class FieldList
     {
-            if( currentNumberOfFields >= Game.NUM_FIELDS )
-            {
-                return null;
-            }
+        private Field[] fields;
+        private int currentNumberOfFields;
 
-            fields[currentNumberOfFields] = new Field(currentNumberOfFields);
-            currentNumberOfFields++;
-            return fields[currentNumberOfFields - 1];
-    }
-
-	public int size() {
-		return fields.Length;
-	}
-
-	public Field get(int id) {
-		return fields[id];
-	}
-
-    public void Eval()
+        public FieldList(int num_fields)
         {
-            foreach (Field f in fields)
-            {
-                f.evalField();
-            }
+            fields = new Field[Game.NUM_FIELDS];
+            currentNumberOfFields = 0;
+        }
+
+        public Field createField()
+        {
+            if (currentNumberOfFields >= Game.NUM_FIELDS)
+                return null;
+
+            fields[currentNumberOfFields] = new Field();
+            return fields[currentNumberOfFields++];
+        }
+
+        public int size()
+        {
+            return fields.Length;
+        }
+
+        public Field get(int id)
+        {
+            return fields[id];
         }
 
         public int Score(Player.Id playerId)
@@ -53,6 +47,6 @@ public class FieldList {
 
             return score;
         }
-}
+    }
 
 } //Namespace Engine

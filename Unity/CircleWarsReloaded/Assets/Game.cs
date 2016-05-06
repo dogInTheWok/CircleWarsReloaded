@@ -20,7 +20,8 @@ namespace Engine
             NotStarted,
             RunningDistribution,
             RunningSecret,
-            Evaluating,
+            EvaluatingFields,
+            EvaluatingTotal,
             Terminated
         }
 
@@ -136,28 +137,6 @@ namespace Engine
             }
         }
 
-        public bool DispatchForce(Field field)
-        {
-            if (CurrentGameState.Value == GameState.RunningDistribution)
-            {
-                if (field.addToken())
-                {
-                    NextTurn();
-                    return true;
-                }
-                return false;
-            }
-            else if (CurrentGameState.Value == GameState.RunningSecret)
-            {
-                if (field.addSecret(CurrentSecretPhaseState.Value))
-                {
-                    NextTurn();
-                }
-                return false;
-            }
-            return false;
-        }
-
         public void EnterSecretPhase()
         {
             CurrentGameState.Value = GameState.RunningSecret;
@@ -196,10 +175,11 @@ namespace Engine
 
         public void EnterEval()
         {
-            CurrentGameState.Value = GameState.Evaluating;
-            secretTurn = -1;
+            // Triggers evaluation of every single field.
+            CurrentGameState.Value = GameState.EvaluatingFields;
 
-            fieldList.Eval();
+            CurrentGameState.Value = GameState.EvaluatingTotal;
+            secretTurn = -1;
             if (fieldList.Score(Player.Id.PLAYER1) == fieldList.Score(Player.Id.PLAYER2))
             {
                 winner = Player.Id.ILLEGAL;

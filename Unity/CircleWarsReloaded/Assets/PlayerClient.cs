@@ -73,7 +73,16 @@ public class PlayerClient : NetworkBehaviour
 
     public bool AddToken(Field field)
     {
-        return activePlayer == player.id ? field.requestToken() : false ;
+        if (activePlayer != player.id)
+            return false;
+
+        if( field.AddToken() )
+        {
+            Game.Instance().NextTurn();
+            return true;
+        }
+   
+        return false;
     }
 
     public void SpawnToken(Vector2 position, Color color)
