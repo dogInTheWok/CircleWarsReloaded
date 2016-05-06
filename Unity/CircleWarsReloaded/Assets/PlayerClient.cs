@@ -33,7 +33,7 @@ public class PlayerClient : NetworkBehaviour
         Game.Instance().CurrentSecretPhaseState.ConnectTo(OnSecretPhaseChangeOut);
         Game.Instance().ActivePlayerId().ConnectTo(OnActivePlayerChangeOut);
 
-        CWLogging.Instance().LogDebug(player.id.ToString());
+        CWLogging.Instance().LogDebug("PlayerClient started: " + player.id.ToString());
     }
     
     public void OnGameStateChangeIn(Game.GameState state)

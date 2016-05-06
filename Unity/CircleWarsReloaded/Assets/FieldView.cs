@@ -3,12 +3,14 @@ using System.Collections;
 using Engine;
 using System;
 
-public class FieldView : MonoBehaviour {
-
-
-    [SerializeField] private BoardView boardView;
-    [SerializeField] private FieldView[] neighbours;
-    [SerializeField] private Vector2 identPoint;
+public class FieldView : MonoBehaviour
+{
+    [SerializeField]
+    private BoardView boardView;
+    [SerializeField]
+    private FieldView[] neighbours;
+    [SerializeField]
+    private Vector2 identPoint;
     private Vector2 tokenPoint;
     private Vector2 fieldPosition;
 
@@ -52,11 +54,12 @@ public class FieldView : MonoBehaviour {
         if (Field.Owner == Player.Id.PLAYER1)
         {
             boardView.addPlayer1Token(tokenPoint);
-        } else if (Field.Owner == Player.Id.PLAYER2)
+        }
+        else if (Field.Owner == Player.Id.PLAYER2)
         {
             boardView.addPlayer2Token(tokenPoint);
         }
-        tokenPoint += MOVE_NEXT_TOKEN; 
+        tokenPoint += MOVE_NEXT_TOKEN;
     }
 
     public void AddThreeVisualTokens()
