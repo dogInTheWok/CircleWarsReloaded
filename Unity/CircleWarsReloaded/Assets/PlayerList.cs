@@ -42,7 +42,7 @@ namespace Engine
             }
             ActivePlayer = Players[index];
         }
-        public bool StartGame()
+        public bool Start()
         {
             if (CurrentNumberOfPlayers < 2)
                 return false;

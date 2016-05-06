@@ -19,7 +19,7 @@ public class StatusTextView : MonoBehaviour
     {
         if (state == Game.GameState.Terminated)
         {
-            text.text = Game.Instance().winner.ToString() + " wins!";
+            text.text = Game.Instance().Winner.ToString() + " wins!";
         }
         else
         {

@@ -64,7 +64,7 @@ public class BoardView : MonoBehaviour
     }
     public void ClearBoard()
     {
-        Game.Instance().Clear();
+        Game.Instance().ClearPlayerTokens();
     }
 
 }

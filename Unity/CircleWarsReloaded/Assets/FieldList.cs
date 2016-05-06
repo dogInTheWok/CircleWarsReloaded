@@ -16,7 +16,7 @@ namespace Engine
 
         public Field CreateField()
         {
-            if (currentNumberOfFields >= Game.NUM_FIELDS)
+            if (currentNumberOfFields >= fields.Length)
                 return null;
 
             fields[currentNumberOfFields] = new Field();

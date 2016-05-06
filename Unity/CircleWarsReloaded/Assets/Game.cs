@@ -9,11 +9,11 @@ namespace Engine
     public class Game : Singleton<Game>
     {
         static public int NUM_FIELDS = 12;
-        static public int NUM_PLAYER = 2;
+        static public int NUM_MAX_PLAYER = 2;
         static public int NUM_SECRETS = 3;
         static public int NUM_FORCES_DISTRIB_PHASE = 14;
-        static public int NUM_TURNS_DISTRIB = NUM_PLAYER * NUM_FORCES_DISTRIB_PHASE;
-        static public int NUM_TURNS_SECRET = NUM_PLAYER * NUM_SECRETS;
+        static public int NUM_TURNS_DISTRIB = NUM_MAX_PLAYER * NUM_FORCES_DISTRIB_PHASE;
+        static public int NUM_TURNS_SECRET = NUM_MAX_PLAYER * NUM_SECRETS;
 
         public enum GameState
         {
@@ -35,52 +35,46 @@ namespace Engine
 
         public CWState<GameState> CurrentGameState { get; private set; }
         public CWState<SecretPhaseState> CurrentSecretPhaseState { get; private set; }
-        public bool isStarted { get; private set; }
-        private int distribTurn;
-        private int secretTurn;
-        public Player.Id winner { get; private set; }
+        public Player.Id Winner { get; private set; }
 
         private PlayerList playerList;
         private FieldList fieldList;
-
-        public Field CreateField()
-        {
-            return fieldList.CreateField();
-        }
-
-        public Player CreatePlayer(PlayerClient playerClient)
-        {
-            return playerList.CreatePlayer(playerClient);
-        }
-
+        private int distribTurn = 0;
+        private int secretTurn = 0;
+        
         public Game()
         {
             var factory = GlobalFactory.Instance();
             playerList = factory.createPlayerList();
             fieldList = factory.createFieldList();
-            isStarted = false;
             CurrentGameState = new CWState<GameState>();
             CurrentGameState.Value = GameState.NotStarted;
             CurrentSecretPhaseState = new CWState<SecretPhaseState>();
             CurrentSecretPhaseState.Value = SecretPhaseState.NotEntered;
-            init();
+            CurrentGameState.ConnectTo(OnGameStateChange);
         }
 
-        public void StartGame()
+        public Field CreateField()
         {
-            if (!playerList.StartGame())
+            return fieldList.CreateField();
+        }
+        public Player CreatePlayer(PlayerClient playerClient)
+        {
+            return playerList.CreatePlayer(playerClient);
+        }
+        public void Start()
+        {
+            if (!playerList.Start())
             {
                 CWLogging.Instance().LogWarning("Game could not be started. Invalid players.");
                 return;
             }
 
-            isStarted = true;
             CurrentGameState.Value = GameState.RunningDistribution;
         }
-
-        public void Clear()
+        public void ClearPlayerTokens()
         {
-            foreach( Player p in playerList.Players )
+            foreach (Player p in playerList.Players)
             {
                 if (null == p)
                     continue;
@@ -93,18 +87,25 @@ namespace Engine
             secretTurn = 0;
             CurrentGameState.Value = GameState.NotStarted;
         }
-
-        private void init()
+        public void OnGameStateChange(Game.GameState state)
         {
-            distribTurn = 0;
-            secretTurn = 0;
+            if (GameState.EvaluatingTotal != state)
+                return;
+
+            if (fieldList.Score(Player.Id.PLAYER1) == fieldList.Score(Player.Id.PLAYER2))
+            {
+                Winner = Player.Id.ILLEGAL;
+            }
+            else
+            {
+                Winner = fieldList.Score(Player.Id.PLAYER1) > fieldList.Score(Player.Id.PLAYER2) ? Player.Id.PLAYER1 : Player.Id.PLAYER2;
+            }
         }
 
         public CWState<Player.Id> ActivePlayerId()
         {
             return playerList.ActivePlayerId;
         }
-
         public Player ActivePlayer()
         {
             return playerList.ActivePlayer;
@@ -114,35 +115,52 @@ namespace Engine
         {
             if (CurrentGameState.Value == GameState.RunningDistribution)
             {
-                NextDistrib();
+                nextDistrib();
             }
             else if (CurrentGameState.Value == GameState.RunningSecret)
             {
-                NextSecret();
+                nextSecret();
             }
 
             if (distribTurn == NUM_TURNS_DISTRIB)
             {
-                EnterSecretPhase();
+                enterSecretPhase();
             }
 
             if (secretTurn == NUM_TURNS_SECRET)
             {
-                EnterEval();
+                enterEval();
             }
         }
 
-        public void EnterSecretPhase()
+        private void enterEval()
+        {
+            // Triggers evaluation of every single field.
+            CurrentGameState.Value = GameState.EvaluatingFields;
+
+            // Triggers total evaluation
+            CurrentGameState.Value = GameState.EvaluatingTotal;
+
+            var logger = CWLogging.Instance();
+            logger.LogDebug("Winner");
+            logger.LogDebug(Winner.ToString());
+            logger.LogDebug(fieldList.Score(Player.Id.PLAYER1).ToString());
+            logger.LogDebug(fieldList.Score(Player.Id.PLAYER2).ToString());
+            CurrentGameState.Value = GameState.Terminated;
+        }
+        private void enterSecretPhase()
         {
             CurrentGameState.Value = GameState.RunningSecret;
             CurrentSecretPhaseState.Value = SecretPhaseState.Batillion;
-            distribTurn = -1;
-            return;
         }
-
-        public void NextSecret()
+        private void nextDistrib()
         {
-            secretTurn += 1;
+            playerList.NextPlayer();
+            distribTurn++;
+        }
+        private void nextSecret()
+        {
+            secretTurn++;
             switch (CurrentSecretPhaseState.Value)
             {
                 case SecretPhaseState.Batillion:
@@ -156,41 +174,13 @@ namespace Engine
                     CurrentSecretPhaseState.Value = SecretPhaseState.Batillion;
                     break;
                 default:
-                    Debug.Log("WARNING: Game::NextPhase: default case entered.");
+                    CWLogging.Instance().LogDebug("Game::NextPhase: default case entered.");
                     CurrentSecretPhaseState.Value = SecretPhaseState.Batillion;
                     break;
             }
         }
-
-        public void NextDistrib()
-        {
-            playerList.NextPlayer();
-            distribTurn += 1;
-        }
-
-        public void EnterEval()
-        {
-            // Triggers evaluation of every single field.
-            CurrentGameState.Value = GameState.EvaluatingFields;
-
-            CurrentGameState.Value = GameState.EvaluatingTotal;
-            secretTurn = -1;
-            if (fieldList.Score(Player.Id.PLAYER1) == fieldList.Score(Player.Id.PLAYER2))
-            {
-                winner = Player.Id.ILLEGAL;
-            }
-            else
-            {
-                winner = fieldList.Score(Player.Id.PLAYER1) > fieldList.Score(Player.Id.PLAYER2) ? Player.Id.PLAYER1 : Player.Id.PLAYER2;
-            }
-
-            var logger = CWLogging.Instance();
-            logger.LogDebug("Winner");
-            logger.LogDebug(winner.ToString());
-            logger.LogDebug(fieldList.Score(Player.Id.PLAYER1).ToString());
-            logger.LogDebug(fieldList.Score(Player.Id.PLAYER2).ToString());
-            CurrentGameState.Value = GameState.Terminated;
-        }
+        
+        
     }
 
 } //Namespace Engine

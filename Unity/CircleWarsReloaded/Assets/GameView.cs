@@ -14,7 +14,7 @@ public class GameView : MonoBehaviour
     {
         if( Game.CurrentGameState.Value == Game.GameState.NotStarted )
         {
-            Game.StartGame();
+            Game.Start();
         }
         else
         {

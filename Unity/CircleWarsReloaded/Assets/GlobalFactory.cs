@@ -7,7 +7,7 @@ namespace Engine
     {
         public PlayerList createPlayerList()
         {
-            return new PlayerList(Game.NUM_PLAYER);
+            return new PlayerList(Game.NUM_MAX_PLAYER);
         }
 
         public FieldList createFieldList()
