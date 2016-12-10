@@ -2,8 +2,8 @@ Unity/CircleWarsReloaded/obj/*
 Unity/CircleWarsReloaded/Temp/*
 Unity/CircleWarsReloaded/Library/*
 obj/*
-Engine/bin/*
-Engine/obj/*
+*/bin/*
+*/obj/*
 *.meta
 *.suo
 *.orig
