@@ -7,3 +7,5 @@ obj/*
 *.meta
 *.suo
 *.orig
+Unity/CWUnitsTest/bin/*
+Unity/CWUnitsTest/obj/*
